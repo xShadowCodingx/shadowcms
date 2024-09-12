@@ -1,0 +1,32 @@
+{
+  "name": "shadowcms",
+  "version": "0.0.1",
+  "description": "Open source CMS built in nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xShadowCodingx/shadowcms.git"
+  },
+  "keywords": [
+    "cms",
+    "nodejs",
+    "sqlite",
+    "node",
+    "js",
+    "free",
+    "open",
+    "source"
+  ],
+  "author": "Chase Quinn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xShadowCodingx/shadowcms/issues"
+  },
+  "homepage": "https://github.com/xShadowCodingx/shadowcms#readme",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

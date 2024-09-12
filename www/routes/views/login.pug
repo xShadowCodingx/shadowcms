@@ -12,8 +12,7 @@ html
                 div.__logo_container
                     img.__logo(src=image_url, alt=image_alt)
                     h2=title
-                //- Need to add functionality to form
-                form(action="").row.justify-content-center.g-0
+                form(action="/login" method="POST").row.justify-content-center.g-0
                     div.mb-3.col-10
                         label(for="email").form-label Email
                         input(type="email")#EmailInput.form-control
@@ -22,4 +21,4 @@ html
                         input(type="password")#PasswordInput.form-control 
                     div.mb-3.col-10.text-center
                         button(type="submit").btn.btn-primary Log In
-                        a(href="#").btn.btn-danger Forgot Password 
+                        a(href="#").btn.btn-danger Forgot Password

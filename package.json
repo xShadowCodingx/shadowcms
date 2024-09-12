@@ -27,8 +27,11 @@
   },
   "homepage": "https://github.com/xShadowCodingx/shadowcms#readme",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "pug": "^3.0.3"
+    "pug": "^3.0.3",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7"
   }
 }

@@ -31,11 +31,17 @@ By default:
 - **general**: blue text
 
 *Function:*
+
 `loghandler(log, message)`
 
 *Example use:*
+
 `loghandler('warning', "This is a warning")`
 
 ##### The Views
 
 The views in the CMS utilize Pug as the view engine. You can access the views templates within */www/routes/views/* if you want to make any changes. The styling in the views is helped by utilizing the [Bootstrap](https://getbootstrap.com/) library. The local css file can be found in */www/public/css/* if you want to make changes there as well.
+
+##### The Database
+
+The database is SQLITE3, and is handled via the (Sequelize ORM)[https://sequelize.org/]. The `DATABASE_USERNAME` and `DATABASE_PASSWORD` in the `.env` file should be changed immediately.

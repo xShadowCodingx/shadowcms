@@ -15,7 +15,7 @@ These settings make it easy quickly adjust your CMS. As I update this CMS, these
 - **port**: This is the default port that the cms will run on. By default it is set to 3000. If this is omitted it will fall back to 3000.
 - **mode**: This is the default mode the cms will run in. You have two options: "development" and "production". If this is omitted it will default to development.
 - **logo**: This allows you to set the url of your logo if you should want to. It gives some personalization to the CMS.
-- **logo_alt**: This allows you to assign the alt attribute to your logo. By default it is "undefined".
+- **logo_alt**: This allows you to assign the alt attribute to your logo.
 - **background_image**: This allows you to assign the background image for the CMS.
 
 

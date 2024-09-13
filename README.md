@@ -45,3 +45,11 @@ The views in the CMS utilize Pug as the view engine. You can access the views te
 ##### The Database
 
 The database is SQLITE3, and is handled via the (Sequelize ORM)[https://sequelize.org/]. The `DATABASE_USERNAME` and `DATABASE_PASSWORD` in the `.env` file should be changed immediately.
+
+##### Hashing
+
+All passwords are hashing utilizing the `bcryptjs` npm library. No password should be stored as plain text.
+
+##### The First User
+
+The first time you run the CMS, it will direct you to the first user account creation page. This will allow you to make your first admin. Be sure to run this page and go through it immediately.

@@ -1,6 +1,7 @@
 // This file handles database logic
 
 const loghandler = require('./loghandler');
+const hashing = require('./hashing');
 
 // Import Sequelize ORM dependencies
 const Sequelize = require('sequelize');
@@ -71,13 +72,17 @@ const check_for_user = async () => {
 
 // Create user
 const create_first_user = async (email, password) => {
+
     try {
-        await User.create({
-            email: email,
-            password: password,
-            active: true,
-            admin: true
+        await hashing.hash_password(password).then(async (pw) => {
+            await User.create({
+                email: email,
+                password: pw,
+                active: true,
+                admin: true
+            })
         })
+
         loghandler('success', 'User created successfully.')
     } catch (error) {
         loghandler('error', 'Unable to create user: ' + error)

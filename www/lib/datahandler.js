@@ -93,13 +93,13 @@ const check_email = async (user) => {
     try {
         const result = await User.findOne({where: {email: user.Email}})
         if(result) {
-            if(hashing.check_hash(user.Password, result.password)) {
+            if(await hashing.check_hash(user.Password, result.password)) {
                 return {found: true, user: result}
             } else {
-                messagehandler('incorrect_login')
+                return messagehandler('incorrect_login')
             }
         } else {
-            messagehandler('incorrect_login')
+            return messagehandler('incorrect_login')
         }
     } catch(error) {
         loghandler('error', 'Unable to see if user exists: ' + error)

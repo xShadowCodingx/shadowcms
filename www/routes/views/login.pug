@@ -15,11 +15,11 @@ html
                     if message 
                         div.row.justify-content-center 
                             if message_type == "error"
-                                div.col-10.alert.alert-danger 
-                                    message 
+                                div.col-10.alert.alert-danger
+                                    p(style="margin: auto !important;")=message 
                             if message_type == "success"
-                                div.col-10.alert.alert-success 
-                                    message
+                                div.col-10.alert.alert-success
+                                    p(style="margin: auto !important;")=message
                         
                 form(action="/login" method="POST").row.justify-content-center.g-0
 

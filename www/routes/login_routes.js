@@ -3,16 +3,30 @@
 const express = require('express');
 const router = express.Router();
 const loginhandler = require('../lib/loginhandler');
-const cms_settings = require('../lib/settings')
+const cms_settings = require('../lib/settings');
 
 router.post('/', async (req, res) => {
     try {
-        res.status(200)
-        res.redirect('/dashboard')
+        const result = await loginhandler.login_user(req.body)
+        if (result != undefined) {
+            if (result.found === true) {
+                res.status(200)
+                res.redirect('/dashboard')
+            } else {
+                res.render('login', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, message_type: result.type, message: result.message })
+            }
+        } else {
+            console.log(result)
+            res.render('login', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, message_type: 'error', message: "An error has occurred. If this continues please contact your administrator." })
+        }
     } catch (error) {
         res.send("There was an error logging in: " + error)
     }
 });
+
+router.get('/' , (req, res) => {
+    res.render('login', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image })
+})
 
 router.post('/first_user', async (req, res) => {
     try {

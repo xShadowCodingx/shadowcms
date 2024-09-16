@@ -2,11 +2,13 @@
 
 const shadowcms_settings = {
     port: 3000,
-    mode: 'development',
     title: "ShadowCMS",
     logo: "/images/shadow_cms_logo.png",
     logo_alt: "ShadowCMS Logo",
-    background_image: "/images/cms_background.jpg"
+    background_image: "/images/cms_background.jpg",
+    messages: {
+        incorrect_login: "No user was found with that username and password."
+    }
 };
 
 module.exports = shadowcms_settings;

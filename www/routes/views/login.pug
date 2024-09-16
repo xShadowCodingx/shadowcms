@@ -12,13 +12,23 @@ html
                 div.__logo_container
                     img.__logo(src=image_url, alt=image_alt)
                     h2=title
+                    if message 
+                        div.row.justify-content-center 
+                            if message_type == "error"
+                                div.col-10.alert.alert-danger 
+                                    message 
+                            if message_type == "success"
+                                div.col-10.alert.alert-success 
+                                    message
+                        
                 form(action="/login" method="POST").row.justify-content-center.g-0
+
                     div.mb-3.col-10
                         label(for="email").form-label Email
-                        input(type="email")#EmailInput.form-control
+                        input(type="email" name="Email")#Email.form-control
                     div.mb-3.col-10
                         label(for="password").form-label Password
-                        input(type="password")#PasswordInput.form-control 
+                        input(type="password" name="Password")#Password.form-control 
                     div.mb-3.col-10.text-center
                         button(type="submit").btn.btn-primary Log In
                         a(href="#").btn.btn-danger Forgot Password

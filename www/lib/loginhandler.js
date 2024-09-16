@@ -14,6 +14,12 @@ const create_first_user = async (user) => {
     }
 }
 
+const login_user = async (user) => {
+    const result = await datahandler.check_email(user)
+    return result
+}
+
 module.exports = {
-    create_first_user
+    create_first_user,
+    login_user
 }

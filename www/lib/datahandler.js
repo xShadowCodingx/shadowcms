@@ -2,6 +2,7 @@
 
 const loghandler = require('./loghandler');
 const hashing = require('./hashing');
+const messagehandler = require('./messagehandler');
 
 // Import Sequelize ORM dependencies
 const Sequelize = require('sequelize');
@@ -17,7 +18,7 @@ const sequelize = new Sequelize('database', process.env.DATABASE_USERNAME, proce
 const test_connection = async () => {
     try {
         await sequelize.authenticate();
-        loghandler('success', 'Connection has been established successfully.')
+        loghandler('success', 'Connection to database has been established successfully.')
     } catch (error) {
         loghandler('error', 'Unable to connect to the database: ' + error)
     }
@@ -56,7 +57,7 @@ const create_tables = async () => {
     }
 }
 
-// Check if a user exists
+// Check if a user exists at all
 const check_for_user = async () => {
     try {
         const user = await User.findAll();
@@ -72,7 +73,6 @@ const check_for_user = async () => {
 
 // Create user
 const create_first_user = async (email, password) => {
-
     try {
         await hashing.hash_password(password).then(async (pw) => {
             await User.create({
@@ -82,10 +82,27 @@ const create_first_user = async (email, password) => {
                 admin: true
             })
         })
-
         loghandler('success', 'User created successfully.')
     } catch (error) {
         loghandler('error', 'Unable to create user: ' + error)
+    }
+}
+
+// Check for user
+const check_email = async (user) => {
+    try {
+        const result = await User.findOne({where: {email: user.Email}})
+        if(result) {
+            if(hashing.check_hash(user.Password, result.password)) {
+                return {found: true, user: result}
+            } else {
+                messagehandler('incorrect_login')
+            }
+        } else {
+            messagehandler('incorrect_login')
+        }
+    } catch(error) {
+        loghandler('error', 'Unable to see if user exists: ' + error)
     }
 }
 
@@ -94,5 +111,6 @@ module.exports = {
     test_connection,
     create_tables,
     check_for_user,
-    create_first_user
+    create_first_user,
+    check_email
 }

@@ -1,5 +1,12 @@
 /* This is the local css file of the CMS */
 
+body {
+    overflow-x: hidden !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .__login_container {
     position: relative;
     height: 100vh;

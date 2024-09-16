@@ -12,7 +12,7 @@ const session = require('express-session');
 const sqlite = require('better-sqlite3');
 
 const SqliteStore = require('better-sqlite3-session-store')(session);
-const db = new sqlite('sessions.db');
+const db = new sqlite('./www/lib/database/sessions.db');
 
 // Set body parser
 app.use(bodyParser.urlencoded({ extended: false }));

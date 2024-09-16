@@ -6,7 +6,39 @@ html
         script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js") 
         link(rel="stylesheet", href="/css/styles.css")
     
-    body 
-        div.row.g-0.justify-content-center.__login_container(style='background-image: url(' + background_image_url + ')')
+    body(style='background-image: url(' + background_image_url + ');')
+        //- Navigation
+        nav.navbar.navbar-expand-lg.bg-body-tertiary
             div.container
-                h1 DASHBOARD
+                a.navbar-brand(href="/")
+                    img(src=image_url alt=image_alt height="30" width="auto")
+                    p(style="display: inline; margin-left: 10px; vertical-align: middle;")=title
+                button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#cmsNav" aria-controls="cmsNav" aria-expanded="false" aria-label="Toggle navigation")
+                    span.navbar-toggler-icon
+                div.collapse.navbar-collapse#cmsNav
+                    ul.navbar-nav
+                        li.nav-item
+                            a.nav-link.active(aria-current="page" href="/") Dashboard
+                        li.nav-item
+                            a.nav-link(href="#") Link
+                        li.nav-item
+                            a.nav-link(href="#") Link
+                        li.nav-item
+                            a.nav-link(href="#") Link
+                        li.nav-item.dropdown
+                            a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Admin
+                            ul.dropdown-menu
+                                li.dropdown-item(href="#") Link
+                                li.dropdown-item(href="#") Link
+                                li.dropdown-item(href="#") Link
+                                li.dropdown-item(href="#") Link
+                                li
+                                    hr.dropdown-divider
+                                li.dropdown-item(href="#") Link
+                        li.nav-item
+                            a.nav-link.text-danger.active(href="/login/logout") Log Out
+
+        div.row.g-0.justify-content-center
+
+            //- Content Container
+            div.container.col-md-8.col-10

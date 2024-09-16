@@ -23,6 +23,7 @@ These settings make it easy quickly adjust your CMS. As I update this CMS, these
 - **DATABASE_USERNAME**: This is the database username, change this to something else that is secure before moving to production.
 - **DATABASE_PASSWORD**: This is the database password, change this to something else that is secure before moving to production.
 - **SESSION_SIGNATURE_SECRET_KEY**: This is the secret key that will sign the cookies for session authentication. Change this to something more secure before moving to production.
+- **SESSION_TIMEOUT_MS**: This is the timeout in milliseconds. It is set to 90,000ms by default which is 15 minutes. Be careful not to give too much time as it opens the door for security issues.
 
 
 ##### The Message Handler
@@ -62,6 +63,10 @@ The database is SQLITE3, and is handled via the (Sequelize ORM)[https://sequeliz
 ##### Hashing
 
 All passwords are hashing utilizing the `bcryptjs` npm library. No password should be stored as plain text.
+
+##### Sessions
+
+Sessions are handled using the `express-sessions` npm library. This is saved to a db that can be located alongside the other database within the */www/lib/database/* folder. However, this is solely for session authentication purposes only.
 
 ##### The First User
 

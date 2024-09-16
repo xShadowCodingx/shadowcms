@@ -1,17 +1,36 @@
 // This is the main entry point for the CMS
 
 const express = require('express');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 require('dotenv').config();
 const settingshandler = require('./www/lib/settingshandler');
-const conditional_handler = require('./www/lib/index_conditionals')
-const datahandler = require('./www/lib/datahandler')
+const conditional_handler = require('./www/lib/index_conditionals');
+const datahandler = require('./www/lib/datahandler');
 
 const app = express();
+const session = require('express-session');
+const sqlite = require('better-sqlite3');
+
+const SqliteStore = require('better-sqlite3-session-store')(session);
+const db = new sqlite('sessions.db');
 
 // Set body parser
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Set session information in middleware
+app.use(session({
+    secret: process.env.SESSION_SIGNATURE_SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+    store: new SqliteStore({
+        client: db,
+        expired: {
+            clear: true,
+            intervalMs: process.env.SESSION_TIMEOUT_MS
+        }
+    })
+}));
 
 // Prep database
 datahandler.sequelize

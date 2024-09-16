@@ -22,6 +22,7 @@ These settings make it easy quickly adjust your CMS. As I update this CMS, these
 - **MODE**: This is the default mode of the application, you can set this to either *'production'* or *'development'*. If it is omitted it will default to *'development'*.
 - **DATABASE_USERNAME**: This is the database username, change this to something else that is secure before moving to production.
 - **DATABASE_PASSWORD**: This is the database password, change this to something else that is secure before moving to production.
+- **SESSION_SIGNATURE_SECRET_KEY**: This is the secret key that will sign the cookies for session authentication. Change this to something more secure before moving to production.
 
 
 ##### The Message Handler

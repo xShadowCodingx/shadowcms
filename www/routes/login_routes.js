@@ -5,11 +5,20 @@ const router = express.Router();
 const loginhandler = require('../lib/loginhandler');
 const cms_settings = require('../lib/settings');
 
+const isAuth = (req, res, next) => {
+    if (!req.session.isAuth) {
+        next();
+    } else {
+        res.redirect('/dashboard');
+    }
+}
+
 router.post('/', async (req, res) => {
     try {
         const result = await loginhandler.login_user(req.body)
         if (result != undefined) {
             if (result.found === true) {
+                req.session.isAuth = true;
                 res.status(200)
                 res.redirect('/dashboard')
             } else {
@@ -24,7 +33,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/' , (req, res) => {
+router.get('/' , isAuth, (req, res) => {
     res.render('login', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image })
 })
 

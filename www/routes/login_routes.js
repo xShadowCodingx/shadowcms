@@ -19,6 +19,12 @@ router.post('/', async (req, res) => {
         if (result != undefined) {
             if (result.found === true) {
                 req.session.isAuth = true;
+                req.session.currentUser = result.user.id
+                if(result.user.admin === true) {
+                    req.session.isAdmin = true
+                } else {
+                    req.session.isAdmin = false
+                }
                 res.status(200)
                 res.redirect('/dashboard')
             } else {

@@ -47,9 +47,11 @@ app.use(express.static('./www/public'));
 // Route imports
 const index_routes = require('./www/routes/index_routes')
 const login_routes = require('./www/routes/login_routes')
+const admin_routes = require('./www/routes/admin_routes')
 
 // Route declarations
 app.use('/', index_routes);
 app.use('/login', login_routes);
+app.use('/admin', admin_routes);
 
 app.listen(settingshandler.port, (error) => { conditional_handler.app_listener(error, settingshandler.port); });

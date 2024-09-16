@@ -34,7 +34,7 @@ router.get('/', bypassLogin, async (req, res) => {
 
 router.get('/dashboard', isAuth, (req, res) => {
     res.status(200);
-    res.render('dashboard', {title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image});
+    res.render('dashboard', {title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, admin: req.session.isAdmin});
 });
 
 module.exports = router;

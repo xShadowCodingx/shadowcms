@@ -100,10 +100,10 @@ body {
     background-color: rgb(170, 170, 170);
 }
 
-#ReferenceList {
-    display: none;
+#NewCategoryForm {
+    padding: 10px !important;
 }
 
-#SecondaryReferenceList {
-    display: none;
+#AddAttributeButton {
+    margin: 1rem;
 }

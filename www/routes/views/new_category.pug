@@ -51,42 +51,113 @@ html
                     div.__schema_header_container
                     div.card.__schema_header
                         h1.text-center.mt-2 New Category
+                        p#counter
                         p.w-100.text-center.text-muted Categories separate your content
                     div.card.__schema_heading
                         div.row.justify-content-center.g-0
                             form.col-10#NewCategoryForm(action="")
-                                div.mb-3 
+                                input#AttributeCounter(type="hidden" value="1" readonly)
+                                div.mb-5
                                     label.form-label(for="CategoryName") Category Name 
                                     input.form-control#CategoryName(type="text" name="CategoryName")
-                                
-                                div.mb-3#ReferenceList
-                                    label.form-label(for="ReferenceMain") Main Reference 
-                                    select.form-select#ReferenceMain(aria-label="ReferenceMain")
-                                        each ref, index in references
-                                            if index == 0
-                                                option(selected value=ref.name) #{ref.name}
-                                            else 
-                                                option(value=ref.name) #{ref.name}
 
-
-
-
-
-
-//- Need to add category types etc
+                            div.row.justify-content-center 
+                                button.btn.btn-primary#AddAttributeButton(style="width: auto;") Add Attribute
 
         script.
-            //- Display references if it is chosen
-            function showReferences() {
-                var references = document.getElementById("Reference").value;
-                var referenceList = document.getElementById("ReferenceList");
-                if(references == "yes") {
-                    referenceList.style.display= "block";
-                } else {
-                    referenceList.style.display = "none";
-                }
+
+            document.getElementById('AddAttributeButton').addEventListener('click', function(e){
+                e.preventDefault();
+                addAttribute();
+            });
+
+            //- Add Attribute to form
+            //- Dynamically assigns depending on the number of attributes that have been added
+            //- Utilizes a hidden input to keep the names from clashing
+            function addAttribute() {
+                //- Get hidden counter
+                var counter = document.getElementById("AttributeCounter")
+                var form = document.getElementById("NewCategoryForm")
+                //- Input container Creation
+                var attributeDiv = document.createElement("div")
+                attributeDiv.classList.add("mb-3")
+                attributeDiv.setAttribute("id", "Attribute" + counter.value)
+                //- Delete Button Creation
+                var deleteButton = document.createElement("button")
+                deleteButton.setAttribute("id", "AttributeDeleteButton" + counter.value)
+                deleteButton.setAttribute("style", "margin-right: .5rem;")
+                deleteButton.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    this.parentNode.remove(this);
+                })
+                deleteButton.classList.add('__icon')
+                deleteButton.classList.add('__delete_icon')
+                var deleteButtonIcon = document.createElement("img")
+                deleteButtonIcon.setAttribute("src", "/images/icons/trash.png")
+                deleteButtonIcon.setAttribute("width", "20")
+                deleteButtonIcon.setAttribute("Height", "20")
+                deleteButton.appendChild(deleteButtonIcon)
+                //- Title Label Creation
+                var titleLabel = document.createElement("label")
+                titleLabel.classList.add("form-label")
+                titleLabel.textContent = "Attribute Title"
+                //- Title Input Creation
+                var titleInput = document.createElement("input")
+                titleInput.classList.add("form-control")
+                titleInput.name = "titleInput" + counter.value
+                //- Type Label Creation
+                var typeLabel = document.createElement("label")
+                typeLabel.classList.add("form-label")
+                typeLabel.textContent = "Attribute Type"
+                //- Type Input Creation
+                var typeInput = document.createElement("select")
+                typeInput.classList.add("form-select")
+                typeInput.name = "typeInput" + counter.value
+                //- Type Options Creation
+                //- Adds directly to the Type Input
+                var typeArray = [
+                    {
+                        name: "Short Text",
+                        value: "short_text"
+                    },
+                    {
+                        name: "Long Text",
+                        value: "long_text"
+                    },
+                    {
+                        name: "Reference",
+                        value: "reference"
+                    },
+                    {
+                        name: "Date",
+                        value: "date"
+                    },
+                    {
+                        name: "Image",
+                        value: "image"
+                    }
+                ];
+                typeArray.map((type) => {
+                    var newOption = document.createElement('option');
+                    newOption.value = type.value;
+                    newOption.textContent = type.name;
+                    typeInput.appendChild(newOption);
+                })
+                //- Element Nesting
+                attributeDiv.appendChild(deleteButton)
+                attributeDiv.appendChild(titleLabel)
+                attributeDiv.appendChild(titleInput)
+                attributeDiv.appendChild(typeLabel)
+                attributeDiv.appendChild(typeInput)
+                //- Element Injection
+                form.appendChild(attributeDiv)
+
+                //- Increase Counter
+                counter.value = parseInt(counter.value) + 1
             }
 
-            function addCategoryType() {
-
+            function removeAttribute(id) {
+                document.getElementById("counter").value = 1000
+                var elem = document.getElementById(id)
+                elem.innerHTML = "HI"
             }

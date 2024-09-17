@@ -8,7 +8,7 @@ const cms_settings = require('../lib/settings')
 
 const isAdminAuth = (req, res, next) => {
     if (req.session.isAuth) {
-        if(req.session.isAdmin === true){
+        if (req.session.isAdmin === true) {
             next();
         } else {
             res.status(401)
@@ -21,7 +21,16 @@ const isAdminAuth = (req, res, next) => {
 
 router.get('/schema', isAdminAuth, async (req, res) => {
     try {
-        res.render('schema', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image })
+        const tables = await datahandler.sequelize.showAllSchemas();
+        let columns = []
+        let table_names = []
+        for await (i of tables) {
+            table_names.push(i.name)
+            let cols = await datahandler.get_column_names(i.name)
+            columns.push(cols)
+        }
+        console.log(columns)
+        res.render('schema', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, tables: table_names, columns: columns })
     } catch (error) {
         res.send("There was an error logging in: " + error)
     }

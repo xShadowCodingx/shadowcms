@@ -91,19 +91,36 @@ const create_first_user = async (email, password) => {
 // Check for user
 const check_email = async (user) => {
     try {
-        const result = await User.findOne({where: {email: user.Email}})
-        if(result) {
-            if(await hashing.check_hash(user.Password, result.password)) {
-                return {found: true, user: result}
+        const result = await User.findOne({ where: { email: user.Email } })
+        if (result) {
+            if (await hashing.check_hash(user.Password, result.password)) {
+                return { found: true, user: result }
             } else {
                 return messagehandler('incorrect_login')
             }
         } else {
             return messagehandler('incorrect_login')
         }
-    } catch(error) {
+    } catch (error) {
         loghandler('error', 'Unable to see if user exists: ' + error)
     }
+}
+
+const create_table = async (table) => {
+    eval('let ' + table.name.toUpperCase() + ' = ' + sequelize.define(table.name, table.fields));
+    await sequelize.sync()
+    loghandler('info', 'Created table: ' + table.name)
+    return messagehandler('table_created')
+}
+
+const get_table_names = async () => {
+    const tables = await sequelize.query("SHOW TABLES");
+    return tables
+}
+
+const get_column_names = async (table) => {
+    let columns = await sequelize.query(`SELECT * FROM PRAGMA_TABLE_INFO('${table}')`)
+    return columns
 }
 
 module.exports = {
@@ -112,5 +129,9 @@ module.exports = {
     create_tables,
     check_for_user,
     create_first_user,
-    check_email
+    check_email,
+    create_table,
+    Sequelize,
+    get_table_names,
+    get_column_names
 }

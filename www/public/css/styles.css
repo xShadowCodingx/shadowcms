@@ -44,3 +44,49 @@ body {
 .__login_card form button:first-of-type {
     margin-right: 1rem;
 }
+
+.__schema_header_container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.__table_container {
+    width: 90%;
+    overflow: auto;
+}
+
+.table {
+    border-color: transparent;
+}
+
+.table th {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+.__icon {
+    display: inline-block;
+    margin-left: 10px;
+    height: 30px !important;
+    width: 30px !important;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.__icon img {
+    height: 100%;
+    width: auto;
+}
+
+.__delete_icon {
+    background-color: rgb(245, 97, 97);
+}
+
+.__edit_icon {
+    background-color: aqua;
+}
+
+.__settings_icon {
+    background-color: rgb(170, 170, 170);
+}

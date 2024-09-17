@@ -10,6 +10,11 @@ const message_handler = (message) => {
                 type: 'error',
                 message: cms_settings.messages.incorrect_login || "No user was found with that username and password."
             })
+        case 'table_created':
+            return ({
+                type: 'success',
+                message: "Table created successfully."
+            })
     }
 }
 

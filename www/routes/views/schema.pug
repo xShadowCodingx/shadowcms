@@ -47,3 +47,32 @@ html
 
             //- Content Container
             div.container.col-md-8.col-10
+                div.mt-5
+                    div.__schema_header_container
+                        div.card.__schema_heading
+                            h1.text-center.mt-2 Schema
+                            p.w-100.text-center.text-muted This is how your content is set up
+                            div.row.g-0.justify-content-center
+                                div.col-10.__table_container
+                                    if tables.length > 1
+                                        each table, index in tables 
+                                            if index > 0
+                                                table.table.__schema_table
+                                                    thead 
+                                                        tr 
+                                                            th #{table.toUpperCase()}
+                                                                div.__icon.__edit_icon
+                                                                    img(src="/images/icons/edit.png")
+                                                                div.__icon.__settings_icon
+                                                                    img(src="/images/icons/settings.png")
+                                                                div.__icon.__delete_icon
+                                                                    img(src="/images/icons/trash.png")
+                                                    tbody 
+                                                        tr  
+                                                            td
+                                                                each cols, col_index in columns[index][0] 
+                                                                        if col_index > 0
+                                                                            p #{cols.name}
+                                                hr
+                                    else 
+                                        h3.text-center(style="margin: 3rem;") You don't have any categories set!

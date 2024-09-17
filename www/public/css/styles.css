@@ -50,9 +50,18 @@ body {
     margin-bottom: 2rem;
 }
 
+.__schema_header {
+    margin-bottom: 1rem;
+}
+
+.__schema_heading {
+    max-height: 70vh;
+    position: relative;
+    overflow: auto;
+}
+
 .__table_container {
     width: 90%;
-    overflow: auto;
 }
 
 .table {
@@ -89,4 +98,12 @@ body {
 
 .__settings_icon {
     background-color: rgb(170, 170, 170);
+}
+
+#ReferenceList {
+    display: none;
+}
+
+#SecondaryReferenceList {
+    display: none;
 }

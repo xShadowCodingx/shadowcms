@@ -2,10 +2,10 @@ html
     head 
         title=title + " | Schema"
         link(rel="icon", href=image_url)
-        link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css")
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css")
         script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js") 
-        link(rel="stylesheet", href="/css/styles.css")
-    
+        link(rel="stylesheet" href="/css/styles.css")
+
     body(style='background-image: url(' + background_image_url + ');')
         //- Navigation
         nav.navbar.navbar-expand-lg.bg-body-tertiary
@@ -49,31 +49,44 @@ html
             div.container.col-md-8.col-10
                 div.mt-5
                     div.__schema_header_container
-                        div.card.__schema_header
-                            h1.text-center.mt-2 Schema
-                            p.w-100.text-center.text-muted This is how your content is set up
-                        div.card.__schema_heading
-                            div.row.g-0.justify-content-center
-                                div.col-10.__table_container
-                                    if tables.length > 1
-                                        each table, index in tables 
-                                            if table != 'users'
-                                                table.table.__schema_table
-                                                    thead 
-                                                        tr 
-                                                            th #{table.toUpperCase()}
-                                                                div.__icon.__edit_icon
-                                                                    img(src="/images/icons/edit.png")
-                                                                div.__icon.__settings_icon
-                                                                    img(src="/images/icons/settings.png")
-                                                                div.__icon.__delete_icon
-                                                                    img(src="/images/icons/trash.png")
-                                                    tbody 
-                                                        tr  
-                                                            td
-                                                                each cols, col_index in columns[index][0] 
-                                                                        if col_index > 0
-                                                                            p #{cols.name}
-                                                hr
-                                    else 
-                                        h3.text-center(style="margin: 3rem;") You don't have any categories set!
+                    div.card.__schema_header
+                        h1.text-center.mt-2 New Category
+                        p.w-100.text-center.text-muted Categories separate your content
+                    div.card.__schema_heading
+                        div.row.justify-content-center.g-0
+                            form.col-10#NewCategoryForm(action="")
+                                div.mb-3 
+                                    label.form-label(for="CategoryName") Category Name 
+                                    input.form-control#CategoryName(type="text" name="CategoryName")
+                                
+                                div.mb-3#ReferenceList
+                                    label.form-label(for="ReferenceMain") Main Reference 
+                                    select.form-select#ReferenceMain(aria-label="ReferenceMain")
+                                        each ref, index in references
+                                            if index == 0
+                                                option(selected value=ref.name) #{ref.name}
+                                            else 
+                                                option(value=ref.name) #{ref.name}
+
+
+
+
+
+
+//- Need to add category types etc
+
+        script.
+            //- Display references if it is chosen
+            function showReferences() {
+                var references = document.getElementById("Reference").value;
+                var referenceList = document.getElementById("ReferenceList");
+                if(references == "yes") {
+                    referenceList.style.display= "block";
+                } else {
+                    referenceList.style.display = "none";
+                }
+            }
+
+            function addCategoryType() {
+
+            }

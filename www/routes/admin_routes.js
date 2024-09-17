@@ -21,7 +21,7 @@ const isAdminAuth = (req, res, next) => {
 
 router.get('/schema', isAdminAuth, async (req, res) => {
     try {
-        const tables = await datahandler.sequelize.showAllSchemas();
+        const tables = await datahandler.get_table_names();
         let columns = []
         let table_names = []
         for await (i of tables) {
@@ -34,6 +34,11 @@ router.get('/schema', isAdminAuth, async (req, res) => {
     } catch (error) {
         res.send("There was an error logging in: " + error)
     }
+});
+
+router.get('/create-category', isAdminAuth, async (req, res) => {
+    const references = await datahandler.get_table_names()
+    res.render('new_category', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, references: references })
 });
 
 module.exports = router;

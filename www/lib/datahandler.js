@@ -6,6 +6,7 @@ const messagehandler = require('./messagehandler');
 
 // Import Sequelize ORM dependencies
 const Sequelize = require('sequelize');
+const Model = require('sequelize').Model
 
 // Create sequelize instance
 const sequelize = new Sequelize('database', process.env.DATABASE_USERNAME, process.env.DATABASE_PASSWORD, {
@@ -107,14 +108,14 @@ const check_email = async (user) => {
 }
 
 const create_table = async (table) => {
-    eval('let ' + table.name.toUpperCase() + ' = ' + sequelize.define(table.name, table.fields));
+    eval('let ' + table.name + ' = ' + sequelize.define(table.name, table.fields));
     await sequelize.sync()
     loghandler('info', 'Created table: ' + table.name)
     return messagehandler('table_created')
 }
 
 const get_table_names = async () => {
-    const tables = await sequelize.query("SHOW TABLES");
+    const tables = await sequelize.showAllSchemas();
     return tables
 }
 

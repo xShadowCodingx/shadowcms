@@ -62,11 +62,9 @@ html
                                                     thead 
                                                         tr 
                                                             th #{table.toUpperCase()}
-                                                                div.__icon.__edit_icon
+                                                                a(href="#" + table).__icon.__edit_icon
                                                                     img(src="/images/icons/edit.png")
-                                                                div.__icon.__settings_icon
-                                                                    img(src="/images/icons/settings.png")
-                                                                div.__icon.__delete_icon
+                                                                a(href="/admin/delete-category?table=" + table).__icon.__delete_icon
                                                                     img(src="/images/icons/trash.png")
                                                     tbody 
                                                         tr  

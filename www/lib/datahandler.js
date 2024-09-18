@@ -110,6 +110,16 @@ const check_email = async (user) => {
     }
 }
 
+const get_table_names = async () => {
+    const tables = await sequelize.showAllSchemas();
+    return tables
+}
+
+const get_column_names = async (table) => {
+    let columns = await sequelize.query(`SELECT * FROM PRAGMA_TABLE_INFO('${table}')`)
+    return columns
+}
+
 const create_table = async (table) => {
     const keys = Object.getOwnPropertyNames(table)
     new_table = {}
@@ -148,8 +158,9 @@ const create_table = async (table) => {
                 case "reference":
                     eval('new_table.fields.' + removed_spaces + ".type = " + "Sequelize.BOOLEAN");
                     eval('new_table.fields.' + removed_spaces + ".allowNull = true");
+                    eval('new_table.fields.reference_from_' + removed_spaces + " = {}");
                     eval('new_table.fields.reference_from_' + removed_spaces + ".type = " + "Sequelize.STRING");
-                    eval('new_table.fields.' + removed_spaces + ".allowNull = true");
+                    eval('new_table.fields.reference_from_' + removed_spaces + ".allowNull = true");
                     break;
                 case 'image':
                     eval('new_table.fields.' + removed_spaces + ".type = " + "Sequelize.STRING");
@@ -165,14 +176,11 @@ const create_table = async (table) => {
     return messagehandler('table_created')
 }
 
-const get_table_names = async () => {
-    const tables = await sequelize.showAllSchemas();
-    return tables
-}
-
-const get_column_names = async (table) => {
-    let columns = await sequelize.query(`SELECT * FROM PRAGMA_TABLE_INFO('${table}')`)
-    return columns
+const delete_table = async(table) => {
+    const dropped_table = await sequelize.query('DROP TABLE ' + table)
+    await sequelize.sync()
+    loghandler('info', 'Dropped table: ' + table)
+    return messagehandler('table_deleted')
 }
 
 module.exports = {
@@ -185,5 +193,6 @@ module.exports = {
     create_table,
     Sequelize,
     get_table_names,
-    get_column_names
+    get_column_names,
+    delete_table
 }

@@ -15,6 +15,11 @@ const message_handler = (message) => {
                 type: 'success',
                 message: "Table created successfully."
             })
+        case 'table_deleted':
+            return ({
+                type: 'success',
+                message: "Table deleted successfully."
+            })
     }
 }
 

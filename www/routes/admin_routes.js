@@ -49,4 +49,13 @@ router.post('/create-category', isAdminAuth, async (req, res) => {
     }
 });
 
+router.get('/delete-category', isAdminAuth, async (req, res) => {
+    try {
+        const deleted_category = await datahandler.delete_table(req.query.table)
+        res.redirect('/admin/schema')
+    } catch (error) {
+        res.send("There was an error deleting the category: " + error)
+    }
+});
+
 module.exports = router;

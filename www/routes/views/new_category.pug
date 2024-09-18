@@ -55,14 +55,15 @@ html
                         p.w-100.text-center.text-muted Categories separate your content
                     div.card.__schema_heading
                         div.row.justify-content-center.g-0
-                            form.col-10#NewCategoryForm(action="")
+                            form.col-10#NewCategoryForm(action="/admin/create-category" method="POST")
                                 input#AttributeCounter(type="hidden" value="1" readonly)
                                 div.mb-5
                                     label.form-label(for="CategoryName") Category Name 
                                     input.form-control#CategoryName(type="text" name="CategoryName")
 
-                            div.row.justify-content-center 
-                                button.btn.btn-primary#AddAttributeButton(style="width: auto;") Add Attribute
+                                div.row.justify-content-center 
+                                    button.btn.btn-primary#AddAttributeButton(style="width: auto;") Add Attribute
+                                    button.btn.btn-success.__category_submit_button(style="width: auto; height: auto;" type="submit") Submit
 
         script.
 

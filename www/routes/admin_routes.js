@@ -29,7 +29,6 @@ router.get('/schema', isAdminAuth, async (req, res) => {
             let cols = await datahandler.get_column_names(i.name)
             columns.push(cols)
         }
-        console.log(columns)
         res.render('schema', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, tables: table_names, columns: columns })
     } catch (error) {
         res.send("There was an error logging in: " + error)
@@ -39,6 +38,15 @@ router.get('/schema', isAdminAuth, async (req, res) => {
 router.get('/create-category', isAdminAuth, async (req, res) => {
     const references = await datahandler.get_table_names()
     res.render('new_category', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, references: references })
+});
+
+router.post('/create-category', isAdminAuth, async (req, res) => {
+    try {
+        const new_category = await datahandler.create_table(req.body)
+        res.redirect('/admin/schema')
+    } catch (error) {
+        res.send("There was an error creating the category: " + error)
+    }
 });
 
 module.exports = router;

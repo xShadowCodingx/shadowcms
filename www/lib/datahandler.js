@@ -11,8 +11,11 @@ const Model = require('sequelize').Model
 // Create sequelize instance
 const sequelize = new Sequelize('database', process.env.DATABASE_USERNAME, process.env.DATABASE_PASSWORD, {
     dialect: 'sqlite',
+    define: {
+        freezeTableName: true
+    },
     storage: './www/lib/database/shadowcmsdb.sqlite',
-    logging: false
+    logging: false,
 });
 
 // Test database connection
@@ -108,9 +111,57 @@ const check_email = async (user) => {
 }
 
 const create_table = async (table) => {
-    eval('let ' + table.name + ' = ' + sequelize.define(table.name, table.fields));
+    const keys = Object.getOwnPropertyNames(table)
+    new_table = {}
+    new_table.fields = {}
+    for (i = 0; i < keys.length; i++) {
+        if (i === 0) {
+            var original_string = eval('table.' + keys[i])
+            var no_special_chars = original_string.replace(/[^a-zA-Z0-9_\s]/g, '')
+            var removed_spaces = no_special_chars.replace(/\s/g, "_")
+            if (!/[a-zA-Z]/.test(removed_spaces[0])) {
+                removed_spaces = "_" + removed_spaces.slice(1);
+            }
+            new_table.name = removed_spaces
+        } else {
+            var original_string = eval('table.' + keys[i])
+            var no_special_chars = original_string.replace(/[^a-zA-Z0-9_\s]/g, '')
+            var removed_spaces = no_special_chars.replace(/\s/g, "_")
+            if (!/[a-zA-Z]/.test(removed_spaces[0])) {
+                removed_spaces = "_" + removed_spaces.slice(1);
+            }
+            eval('new_table.fields.' + removed_spaces + "= {}");
+            i++
+            switch (eval('table.' + keys[i])) {
+                case "short_text":
+                    eval('new_table.fields.' + removed_spaces + ".type = " + "Sequelize.STRING");
+                    eval('new_table.fields.' + removed_spaces + ".allowNull = true");
+                    break;
+                case "long_text":
+                    eval('new_table.fields.' + removed_spaces + ".type = " + "Sequelize.BLOB");
+                    eval('new_table.fields.' + removed_spaces + ".allowNull = true");
+                    break;
+                case "date":
+                    eval('new_table.fields.' + removed_spaces + ".type = " + "Sequelize.DATE");
+                    eval('new_table.fields.' + removed_spaces + ".allowNull = true");
+                    break;
+                case "reference":
+                    eval('new_table.fields.' + removed_spaces + ".type = " + "Sequelize.BOOLEAN");
+                    eval('new_table.fields.' + removed_spaces + ".allowNull = true");
+                    eval('new_table.fields.reference_from_' + removed_spaces + ".type = " + "Sequelize.STRING");
+                    eval('new_table.fields.' + removed_spaces + ".allowNull = true");
+                    break;
+                case 'image':
+                    eval('new_table.fields.' + removed_spaces + ".type = " + "Sequelize.STRING");
+                    eval('new_table.fields.' + removed_spaces + ".allowNull = true");
+                    break;
+
+            }
+        }
+    }
+    eval('let ' + new_table.name + ' = ' + sequelize.define(new_table.name, new_table.fields));
     await sequelize.sync()
-    loghandler('info', 'Created table: ' + table.name)
+    loghandler('info', 'Created table: ' + new_table.name)
     return messagehandler('table_created')
 }
 

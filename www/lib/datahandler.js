@@ -51,6 +51,20 @@ const User = sequelize.define(
     }
 )
 
+const API_Keys = sequelize.define(
+    'api_keys',
+    {
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        key: {
+            type: Sequelize.STRING,
+            allowNull: false
+        }
+    }
+)
+
 // Create Tables
 const create_tables = async () => {
     try {

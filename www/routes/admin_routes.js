@@ -58,4 +58,8 @@ router.get('/delete-category', isAdminAuth, async (req, res) => {
     }
 });
 
+router.get('/api-keys', isAdminAuth, async (req, res) => {
+    res.render('api_keys', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image })
+});
+
 module.exports = router;

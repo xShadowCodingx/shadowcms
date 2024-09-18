@@ -33,7 +33,7 @@ html
                                 li
                                     a.dropdown-item(href="/admin/create-category" style="cursor: pointer;") Create Category
                                 li
-                                    a.dropdown-item(href="#" style="cursor: pointer;") Link
+                                    a.dropdown-item(href="/admin/api-keys" style="cursor: pointer;") API Keys
                                 li
                                     a.dropdown-item(href="#" style="cursor: pointer;") Link
                                 li
@@ -57,13 +57,11 @@ html
                                 div.col-10.__table_container
                                     if tables.length > 1
                                         each table, index in tables 
-                                            if table != 'users'
+                                            if table != 'users' && table != 'api_keys'
                                                 table.table.__schema_table
                                                     thead 
                                                         tr 
                                                             th #{table.toUpperCase()}
-                                                                a(href="#" + table).__icon.__edit_icon
-                                                                    img(src="/images/icons/edit.png")
                                                                 a(href="/admin/delete-category?table=" + table).__icon.__delete_icon
                                                                     img(src="/images/icons/trash.png")
                                                     tbody 

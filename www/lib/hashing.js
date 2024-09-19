@@ -2,10 +2,10 @@
 
 const bcrypt = require('bcryptjs');
 
-const hash_password = async (password) => {
-    const salt = bcrypt.genSaltSync(10);
-    const pw = bcrypt.hashSync(password, salt)
-    return pw
+const hash_password = (password) => {
+    const saltRounds = 10;
+    const hash = bcrypt.hashSync(password, saltRounds);
+    return hash
 }
 
 const check_hash = async (password, hash) => {

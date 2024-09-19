@@ -49,6 +49,10 @@ const User = sequelize.define(
         admin: {
             type: Sequelize.BOOLEAN,
             defaultValue: false
+        },
+        temporaryPassword: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
         }
     }
 )
@@ -192,7 +196,7 @@ const create_table = async (table) => {
     return messagehandler('table_created')
 }
 
-const delete_table = async(table) => {
+const delete_table = async (table) => {
     const dropped_table = await sequelize.query('DROP TABLE ' + table)
     await sequelize.sync()
     loghandler('info', 'Dropped table: ' + table)
@@ -221,6 +225,45 @@ const delete_api_key = async (api_key_name) => {
     return messagehandler('key_deleted')
 }
 
+const get_users = async () => {
+    const users = await User.findAll()
+    return users
+}
+
+const create_user = async (user) => {
+    try {
+        let result = await User.findOne({where: {email: user.Email}})
+        if(result) {
+            return messagehandler('user_already_exists')
+        } else {
+            let password = hashing.hash_password(user.TemporaryPassword)
+            if (user.Admin) {
+                let new_user = await User.create({
+                    email: user.Email,
+                    password: password,
+                    admin: true,
+                    temporaryPassword: true
+                })
+                loghandler('success', 'User (Admin) created successfully.')
+                return messagehandler('user_created')
+            } else {
+                let new_user = await User.create({
+                    email: user.Email,
+                    password: password,
+                    admin: true,
+                    temporaryPassword: true
+                })
+                loghandler('success', 'User created successfully.')
+                return messagehandler('user_created')
+            }
+        }
+
+        return messagehandler('user_created')
+    } catch (error) {
+        loghandler('error', 'Unable to see if user exists: ' + error)
+    }
+}
+
 module.exports = {
     sequelize,
     test_connection,
@@ -235,5 +278,7 @@ module.exports = {
     delete_table,
     get_api_keys,
     create_api_key,
-    delete_api_key
+    delete_api_key,
+    get_users,
+    create_user
 }

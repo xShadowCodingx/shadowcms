@@ -48,43 +48,48 @@ html
                 div.mt-5
                     div.__schema_header_container
                     div.card.__schema_header
-                        h1.text-center.mt-2 API Keys
+                        h1.text-center.mt-2 #{title} Users
                         p#counter
-                        p.w-100.text-center.text-muted Create API keys to access your CMS
-                        p.w-100.text-center.text-muted You can click the key to copy to clipboard
+                        p.w-100.text-center.text-muted Create other users for your CMS
+                        p.w-100.text-center.text-muted They will be prompted to change their temporary password when they log in
                     div.card.__schema_heading
                         div.row.justify-content-center.g-0
-                            form.col-10#NewCategoryForm(action="/admin/api-keys" method="POST")
+                            form.col-10#NewCategoryForm(action="/admin/users" method="POST")
                                 div.mb-5
-                                    label.form-label.col-md-6(for="KeyName") Name for the API key 
-                                    input.form-control#KeyName(type="text" name="name")
+                                    label.form-label.col-md-6(for="Email") Email 
+                                    input.form-control#Email(type="text" name="Email")
+                                div.mb-5
+                                    label.form-label.col-md-6(for="TemporaryPassword") Temporary Password
+                                    input.form-control#TemporaryPassword(type="text" name="TemporaryPassword")
+                                div.mb-5
+                                    input.form-check-input(type="checkbox" value="true" id="AdminCheckbox" style="margin-right: 1rem;" name="Admin")
+                                    label.form-check-label(for="AdminCheckbox") Admin
 
                                 div.row.justify-content-center 
-                                    button.btn.btn-success.__category_submit_button(style="width: auto; height: auto;" type="submit") Add API Key
+                                    button.btn.btn-success.__category_submit_button(style="width: auto; height: auto;" type="submit") Add User
                                 
                             .row.g-0.col-10.justify-content-center
                                 table.table#APIKeyTable
                                     thead 
-                                        th Current API Keys
+                                        th Active #{title} Users
                                     tbody 
-                                        if api_keys.length == 0
-                                            td You do not have any API keys set up yet.
+                                        if users.length == 1
+                                            td You do not have any users set up yet.
                                         else 
-                                            each key in api_keys 
-                                                tr
-                                                    td 
-                                                        a(href="/admin/delete-api-key?name="+key.name)
-                                                            img(src="/images/icons/trash.png" height="20" width="20" style="display: inline;")
-                                                        p(style="display: inline;") #{key.name}
-                                                    td(id=key.name style="cursor: pointer;" onclick=`createCopy("${key.name}")`) #{key.key}
+                                            each user in users 
+                                                if user.id != 1
+                                                    tr
+                                                        td(id=user.email) #{user.email}
                             
-
-        script.
-            async function createCopy(id) {
-                let table = document.getElementById("APIKeyTable")
-                let key = document.getElementById(id)
-                await navigator.clipboard.writeText(key.innerHTML)
-                alert("Key Copied")
-            }
-
-                    
+                            if inactive_users
+                                .row.g-0.col-10.justify-content-center
+                                    table.table#APIKeyTable
+                                        thead 
+                                            th Inactive #{title} Users
+                                        tbody 
+                                            if inactive_users.length == 0
+                                                td You do not have any inactive users.
+                                            else 
+                                                each user in inactive_users 
+                                                    tr
+                                                        td user

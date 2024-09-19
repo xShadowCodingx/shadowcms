@@ -30,6 +30,16 @@ const message_handler = (message) => {
                 type: 'success',
                 message: "API key deleted successfully."
             })
+        case 'user_already_exists':
+            return ({
+                type: 'error',
+                message: "This user already exists."
+            })
+        case 'user_created':
+            return ({
+                type: 'success',
+                message: "User created successfully."
+            })
     }
 }
 

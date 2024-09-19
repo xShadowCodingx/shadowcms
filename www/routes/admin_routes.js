@@ -73,4 +73,14 @@ router.get('/delete-api-key', isAdminAuth, async (req, res) => {
     res.redirect('/admin/api-keys')
 })
 
+router.get('/users', isAdminAuth, async (req, res) => {
+    const users = await datahandler.get_users()
+    res.render('users', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, users: users })
+})
+
+router.post('/users', isAdminAuth, async (req, res) => {
+    const user = await datahandler.create_user(req.body)
+    res.redirect('/admin/users')
+})
+
 module.exports = router;

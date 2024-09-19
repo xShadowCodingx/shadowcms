@@ -83,4 +83,9 @@ router.post('/users', isAdminAuth, async (req, res) => {
     res.redirect('/admin/users')
 })
 
+router.get('/delete-user', isAdminAuth, async (req, res) => {
+    const deleted_user = await datahandler.delete_user_by_id(req.query.user)
+    res.redirect("/admin/users")
+})
+
 module.exports = router;

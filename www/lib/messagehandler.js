@@ -40,6 +40,11 @@ const message_handler = (message) => {
                 type: 'success',
                 message: "User created successfully."
             })
+        case 'user_deleted':
+            return ({
+                type: 'success',
+                message: "User deleted successfully."
+            })
     }
 }
 

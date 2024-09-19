@@ -257,11 +257,21 @@ const create_user = async (user) => {
                 return messagehandler('user_created')
             }
         }
-
-        return messagehandler('user_created')
     } catch (error) {
         loghandler('error', 'Unable to see if user exists: ' + error)
     }
+}
+
+const get_user_by_id = async (id) => {
+    const user = await User.findOne({ where: { id: id } })
+    return user
+}
+
+const delete_user_by_id = async (id) => {
+    const user = await get_user_by_id(id)
+    const deleted_user = await user.destroy()
+    loghandler('success', 'User deleted successfully.')
+    return messagehandler('user_deleted')
 }
 
 module.exports = {
@@ -280,5 +290,7 @@ module.exports = {
     create_api_key,
     delete_api_key,
     get_users,
-    create_user
+    create_user,
+    get_user_by_id,
+    delete_user_by_id
 }

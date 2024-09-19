@@ -79,7 +79,10 @@ html
                                             each user in users 
                                                 if user.id != 1
                                                     tr
-                                                        td(id=user.email) #{user.email}
+                                                        td(id=user.email) 
+                                                            a(href="/admin/delete-user?user=" + user.id)
+                                                                img(src="/images/icons/trash.png" width="20" height="20" style="display: inline;")
+                                                            p(style="display: inline;") #{user.email}
                             
                             if inactive_users
                                 .row.g-0.col-10.justify-content-center
@@ -92,4 +95,4 @@ html
                                             else 
                                                 each user in inactive_users 
                                                     tr
-                                                        td user
+                                                        td Inactive_User

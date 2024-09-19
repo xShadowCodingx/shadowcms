@@ -20,6 +20,16 @@ const message_handler = (message) => {
                 type: 'success',
                 message: "Table deleted successfully."
             })
+        case 'key_created':
+            return ({
+                type: 'success',
+                message: "API key created successfully."
+            })
+        case 'key_deleted':
+            return ({
+                type: 'success',
+                message: "API key deleted successfully."
+            })
     }
 }
 

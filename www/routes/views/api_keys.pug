@@ -53,112 +53,40 @@ html
                         h1.text-center.mt-2 API Keys
                         p#counter
                         p.w-100.text-center.text-muted Create API keys to access your CMS
+                        p.w-100.text-center.text-muted You can click the key to copy to clipboard
                     div.card.__schema_heading
                         div.row.justify-content-center.g-0
-                            form.col-10#NewCategoryForm(action="/admin/create-category" method="POST")
-                                input#AttributeCounter(type="hidden" value="1" readonly)
+                            form.col-10#NewCategoryForm(action="/admin/api-keys" method="POST")
                                 div.mb-5
-                                    label.form-label(for="CategoryName") Category Name 
-                                    input.form-control#CategoryName(type="text" name="CategoryName")
+                                    label.form-label.col-md-6(for="KeyName") Name for the API key 
+                                    input.form-control#KeyName(type="text" name="name")
 
                                 div.row.justify-content-center 
-                                    button.btn.btn-primary#AddAttributeButton(style="width: auto;") Add Attribute
-                                    button.btn.btn-success.__category_submit_button(style="width: auto; height: auto;" type="submit") Submit
+                                    button.btn.btn-success.__category_submit_button(style="width: auto; height: auto;" type="submit") Add API Key
+                                
+                            .row.g-0.col-10.justify-content-center
+                                table.table#APIKeyTable
+                                    thead 
+                                        th Current API Keys
+                                    tbody 
+                                        if api_keys.length == 0
+                                            td You do not have any API keys set up yet.
+                                        else 
+                                            each key in api_keys 
+                                                tr
+                                                    td 
+                                                        a(href="/admin/delete-api-key?name="+key.name)
+                                                            img(src="/images/icons/trash.png" height="20" width="20" style="display: inline;")
+                                                        p(style="display: inline;") #{key.name}
+                                                    td(id=key.name style="cursor: pointer;" onclick=`createCopy("${key.name}")`) #{key.key}
+                            
 
         script.
-
-            document.getElementById('AddAttributeButton').addEventListener('click', function(e){
-                e.preventDefault();
-                addAttribute();
-            });
-
-            //- Add Attribute to form
-            //- Dynamically assigns depending on the number of attributes that have been added
-            //- Utilizes a hidden input to keep the names from clashing
-            function addAttribute() {
-                //- Get hidden counter
-                var counter = document.getElementById("AttributeCounter")
-                var form = document.getElementById("NewCategoryForm")
-                //- Input container Creation
-                var attributeDiv = document.createElement("div")
-                attributeDiv.classList.add("mb-3")
-                attributeDiv.setAttribute("id", "Attribute" + counter.value)
-                //- Delete Button Creation
-                var deleteButton = document.createElement("button")
-                deleteButton.setAttribute("id", "AttributeDeleteButton" + counter.value)
-                deleteButton.setAttribute("style", "margin-right: .5rem;")
-                deleteButton.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    this.parentNode.remove(this);
-                })
-                deleteButton.classList.add('__icon')
-                deleteButton.classList.add('__delete_icon')
-                var deleteButtonIcon = document.createElement("img")
-                deleteButtonIcon.setAttribute("src", "/images/icons/trash.png")
-                deleteButtonIcon.setAttribute("width", "20")
-                deleteButtonIcon.setAttribute("Height", "20")
-                deleteButton.appendChild(deleteButtonIcon)
-                //- Title Label Creation
-                var titleLabel = document.createElement("label")
-                titleLabel.classList.add("form-label")
-                titleLabel.textContent = "Attribute Title"
-                //- Title Input Creation
-                var titleInput = document.createElement("input")
-                titleInput.classList.add("form-control")
-                titleInput.name = "titleInput" + counter.value
-                //- Type Label Creation
-                var typeLabel = document.createElement("label")
-                typeLabel.classList.add("form-label")
-                typeLabel.textContent = "Attribute Type"
-                //- Type Input Creation
-                var typeInput = document.createElement("select")
-                typeInput.classList.add("form-select")
-                typeInput.name = "typeInput" + counter.value
-                //- Type Options Creation
-                //- Adds directly to the Type Input
-                var typeArray = [
-                    {
-                        name: "Short Text",
-                        value: "short_text"
-                    },
-                    {
-                        name: "Long Text",
-                        value: "long_text"
-                    },
-                    {
-                        name: "Reference",
-                        value: "reference"
-                    },
-                    {
-                        name: "Date",
-                        value: "date"
-                    },
-                    {
-                        name: "Image",
-                        value: "image"
-                    }
-                ];
-                typeArray.map((type) => {
-                    var newOption = document.createElement('option');
-                    newOption.value = type.value;
-                    newOption.textContent = type.name;
-                    typeInput.appendChild(newOption);
-                })
-                //- Element Nesting
-                attributeDiv.appendChild(deleteButton)
-                attributeDiv.appendChild(titleLabel)
-                attributeDiv.appendChild(titleInput)
-                attributeDiv.appendChild(typeLabel)
-                attributeDiv.appendChild(typeInput)
-                //- Element Injection
-                form.appendChild(attributeDiv)
-
-                //- Increase Counter
-                counter.value = parseInt(counter.value) + 1
+            async function createCopy(id) {
+                let table = document.getElementById("APIKeyTable")
+                let key = document.getElementById(id)
+                await navigator.clipboard.writeText(key.innerHTML)
+                alert("Key Copied")
             }
 
-            function removeAttribute(id) {
-                document.getElementById("counter").value = 1000
-                var elem = document.getElementById(id)
-                elem.innerHTML = "HI"
-            }
+                    

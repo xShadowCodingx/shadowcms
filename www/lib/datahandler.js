@@ -1,5 +1,7 @@
 // This file handles database logic
 
+const { v4: uuidv4 } = require('uuid');
+
 const loghandler = require('./loghandler');
 const hashing = require('./hashing');
 const messagehandler = require('./messagehandler');
@@ -197,6 +199,28 @@ const delete_table = async(table) => {
     return messagehandler('table_deleted')
 }
 
+const get_api_keys = async () => {
+    const api_keys = await API_Keys.findAll()
+    return api_keys
+}
+
+const create_api_key = async (api_key) => {
+    var key = uuidv4()
+    const name = api_key.name
+    key = key.replace(/-/g, "")
+    let new_key = await API_Keys.create({
+        name: name,
+        key: key
+    })
+    return messagehandler('key_created')
+}
+
+const delete_api_key = async (api_key_name) => {
+    const key = await API_Keys.findOne({ where: { name: api_key_name } })
+    await key.destroy()
+    return messagehandler('key_deleted')
+}
+
 module.exports = {
     sequelize,
     test_connection,
@@ -208,5 +232,8 @@ module.exports = {
     Sequelize,
     get_table_names,
     get_column_names,
-    delete_table
+    delete_table,
+    get_api_keys,
+    create_api_key,
+    delete_api_key
 }

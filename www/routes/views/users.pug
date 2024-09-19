@@ -74,25 +74,29 @@ html
                                         th Active #{title} Users
                                     tbody 
                                         if users.length == 1
-                                            td You do not have any users set up yet.
+                                            td You do not have any active users set up yet.
                                         else 
                                             each user in users 
                                                 if user.id != 1
                                                     tr
                                                         td(id=user.email) 
-                                                            a(href="/admin/delete-user?user=" + user.id)
+                                                            a(href="/admin/deactivate-user?user=" + user.id)
                                                                 img(src="/images/icons/trash.png" width="20" height="20" style="display: inline;")
                                                             p(style="display: inline;") #{user.email}
                             
                             if inactive_users
-                                .row.g-0.col-10.justify-content-center
-                                    table.table#APIKeyTable
-                                        thead 
-                                            th Inactive #{title} Users
-                                        tbody 
-                                            if inactive_users.length == 0
-                                                td You do not have any inactive users.
-                                            else 
-                                                each user in inactive_users 
-                                                    tr
-                                                        td Inactive_User
+                                if inactive_users.length > 0
+                                    .row.g-0.col-10.justify-content-center
+                                        table.table#APIKeyTable
+                                            thead 
+                                                th Inactive #{title} Users
+                                            tbody 
+                                                if inactive_users.length == 0
+                                                    td You do not have any inactive users.
+                                                else 
+                                                    each i_user in inactive_users 
+                                                        tr
+                                                            td(id=i_user.email) 
+                                                                a(href="/admin/delete-user?user=" + i_user.id)
+                                                                    img(src="/images/icons/trash.png" width="20" height="20" style="display: inline;")
+                                                                p(style="display: inline;") #{i_user.email}

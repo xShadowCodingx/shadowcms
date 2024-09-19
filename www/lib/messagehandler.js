@@ -45,6 +45,11 @@ const message_handler = (message) => {
                 type: 'success',
                 message: "User deleted successfully."
             })
+        case 'user_deactivated':
+            return ({
+                type: 'success',
+                message: "User deactivated successfully."
+            })
     }
 }
 

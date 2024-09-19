@@ -74,8 +74,9 @@ router.get('/delete-api-key', isAdminAuth, async (req, res) => {
 })
 
 router.get('/users', isAdminAuth, async (req, res) => {
-    const users = await datahandler.get_users()
-    res.render('users', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, users: users })
+    const active_users = await datahandler.get_active_users()
+    const inactive_users = await datahandler.get_inactive_users()
+    res.render('users', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, users: active_users, inactive_users: inactive_users })
 })
 
 router.post('/users', isAdminAuth, async (req, res) => {
@@ -85,6 +86,11 @@ router.post('/users', isAdminAuth, async (req, res) => {
 
 router.get('/delete-user', isAdminAuth, async (req, res) => {
     const deleted_user = await datahandler.delete_user_by_id(req.query.user)
+    res.redirect("/admin/users")
+})
+
+router.get('/deactivate-user', isAdminAuth, async (req, res) => {
+    const deactivated_user = await datahandler.deactivate_user_by_id(req.query.user)
     res.redirect("/admin/users")
 })
 

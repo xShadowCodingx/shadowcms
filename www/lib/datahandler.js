@@ -274,6 +274,23 @@ const delete_user_by_id = async (id) => {
     return messagehandler('user_deleted')
 }
 
+const deactivate_user_by_id = async (id) => {
+    const user = await get_user_by_id(id)
+    const deactivated_user = await user.update({ active: false })
+    loghandler('success', 'User deactivated successfully.')
+    return messagehandler('user_deactivated')
+}
+
+const get_active_users = async () => {
+    const users = await User.findAll({ where: { active: true } })
+    return users
+}
+
+const get_inactive_users = async () => {
+    const users = await User.findAll({ where: { active: false } })
+    return users
+}
+
 module.exports = {
     sequelize,
     test_connection,
@@ -292,5 +309,8 @@ module.exports = {
     get_users,
     create_user,
     get_user_by_id,
-    delete_user_by_id
+    delete_user_by_id,
+    deactivate_user_by_id,
+    get_active_users,
+    get_inactive_users
 }

@@ -2,9 +2,8 @@
 
 body {
     overflow-x: hidden !important;
-    background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
 }
 
 .__login_container {

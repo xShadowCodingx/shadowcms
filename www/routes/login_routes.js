@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const loginhandler = require('../lib/loginhandler');
+const datahandler = require('../lib/datahandler')
 const cms_settings = require('../lib/settings');
 
 const isAuth = (req, res, next) => {
@@ -18,15 +19,20 @@ router.post('/', async (req, res) => {
         const result = await loginhandler.login_user(req.body)
         if (result != undefined) {
             if (result.found === true) {
-                req.session.isAuth = true;
-                req.session.currentUser = result.user.id
-                if(result.user.admin === true) {
-                    req.session.isAdmin = true
+                const active = await datahandler.check_if_active(result.user.id)
+                if (active === true) {
+                    req.session.isAuth = true;
+                    req.session.currentUser = result.user.id
+                    if (result.user.admin === true) {
+                        req.session.isAdmin = true
+                    } else {
+                        req.session.isAdmin = false
+                    }
+                    res.status(200)
+                    res.redirect('/dashboard')
                 } else {
-                    req.session.isAdmin = false
+                    res.render('login', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, message_type: "error", message: "User is inactive" })
                 }
-                res.status(200)
-                res.redirect('/dashboard')
             } else {
                 res.render('login', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, message_type: result.type, message: result.message })
             }
@@ -39,7 +45,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/' , isAuth, (req, res) => {
+router.get('/', isAuth, (req, res) => {
     res.render('login', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image })
 })
 

@@ -250,7 +250,7 @@ const create_user = async (user) => {
                 let new_user = await User.create({
                     email: user.Email,
                     password: password,
-                    admin: true,
+                    admin: false,
                     temporaryPassword: true
                 })
                 loghandler('success', 'User created successfully.')
@@ -291,6 +291,15 @@ const get_inactive_users = async () => {
     return users
 }
 
+const check_if_active = async (id) => {
+    const user = await get_user_by_id(id)
+    if (user.active) {
+        return true
+    } else {
+        return false
+    }
+}
+
 module.exports = {
     sequelize,
     test_connection,
@@ -312,5 +321,6 @@ module.exports = {
     delete_user_by_id,
     deactivate_user_by_id,
     get_active_users,
-    get_inactive_users
+    get_inactive_users,
+    check_if_active
 }

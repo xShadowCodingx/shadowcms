@@ -1,5 +1,7 @@
 # ShadowCMS
-## Open Source CMS
+Open Source CMS
+
+**Do not go by this README just yet. I am working on finishing V1**
 
 ##### Key Features:
 

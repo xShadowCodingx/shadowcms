@@ -5,7 +5,7 @@ const shadowcms_settings = {
     title: "ShadowCMS",
     logo: "/images/shadow_cms_logo.png",
     logo_alt: "ShadowCMS Logo",
-    background_image: "/images/cms_background.jpg",
+    background_image: "/images/cms_background.png",
     messages: {
         incorrect_login: "No user was found with that username and password."
     }

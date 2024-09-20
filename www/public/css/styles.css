@@ -44,34 +44,6 @@ body {
     margin-right: 1rem;
 }
 
-.__schema_header_container {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.__schema_header {
-    margin-bottom: 1rem;
-}
-
-.__schema_heading {
-    max-height: 70vh;
-    position: relative;
-    overflow: auto;
-}
-
-.__table_container {
-    width: 90%;
-}
-
-.table {
-    border-color: transparent;
-}
-
-.table th {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-}
-
 .__icon {
     display: inline-block;
     margin-left: 10px;
@@ -103,6 +75,71 @@ body {
     padding: 10px !important;
 }
 
-#AddAttributeButton {
-    margin: 1rem;
+/* Admin Panel - Universal */
+.__admin_content {
+    background-color: white;
+}
+
+.__admin_header_container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.__admin_header {
+    margin-bottom: 4rem;
+}
+
+.__admin_table_container {
+    width: 90%;
+}
+
+.__admin_table {
+    border-color: transparent;
+}
+
+.__admin_table th {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+
+
+/* Admin Panel - New Category */
+
+#AttributeList {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#AddAttributeButton{
+    background-color: rgb(105, 105, 105);
+    color: white;
+    width: auto;
+    height: auto;
+    margin-right: 30px;
+}
+
+#AddAttributeButton:hover {
+    background-color: rgb(77, 77, 77);
+    color: white;
+}
+
+.__category_submit_button {
+    background-color: seagreen;
+    color: white;
+    width: auto;
+    height: auto;
+}
+
+.__category_submit_button:hover {
+    background-color: rgb(26, 95, 56);
+    color: white;
+}
+
+/* Admin Panel - Api Keys */
+
+#APIKeyList {
+    max-height: 300px;
+    overflow: auto;
+    margin-bottom: 1rem;
 }

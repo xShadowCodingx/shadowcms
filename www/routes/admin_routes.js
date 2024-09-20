@@ -19,7 +19,7 @@ const isAdminAuth = (req, res, next) => {
     }
 }
 
-router.get('/schema', isAdminAuth, async (req, res) => {
+router.get('/categories', isAdminAuth, async (req, res) => {
     try {
         const tables = await datahandler.get_table_names();
         let columns = []
@@ -43,7 +43,7 @@ router.get('/create-category', isAdminAuth, async (req, res) => {
 router.post('/create-category', isAdminAuth, async (req, res) => {
     try {
         const new_category = await datahandler.create_table(req.body)
-        res.redirect('/admin/schema')
+        res.redirect('/admin/create-category')
     } catch (error) {
         res.send("There was an error creating the category: " + error)
     }
@@ -52,7 +52,7 @@ router.post('/create-category', isAdminAuth, async (req, res) => {
 router.get('/delete-category', isAdminAuth, async (req, res) => {
     try {
         const deleted_category = await datahandler.delete_table(req.query.table)
-        res.redirect('/admin/schema')
+        res.redirect('/admin/categories')
     } catch (error) {
         res.send("There was an error deleting the category: " + error)
     }

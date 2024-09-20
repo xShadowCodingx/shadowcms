@@ -198,7 +198,6 @@ const create_table = async (table) => {
 
 const delete_table = async (table) => {
     const dropped_table = await sequelize.query('DROP TABLE ' + table)
-    await sequelize.sync()
     loghandler('info', 'Dropped table: ' + table)
     return messagehandler('table_deleted')
 }

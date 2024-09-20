@@ -29,7 +29,7 @@ html
                             a.nav-link.dropdown-toggle.active(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Admin
                             ul.dropdown-menu
                                 li
-                                    a.dropdown-item.active(href="/admin/schema" aria-current="page" style="cursor: pointer;") Schema
+                                    a.dropdown-item.active(href="/admin/categories" aria-current="page" style="cursor: pointer;") Categories
                                 li
                                     a.dropdown-item(href="/admin/create-category" style="cursor: pointer;") Create Category
                                 li
@@ -44,19 +44,19 @@ html
         div.row.g-0.justify-content-center
 
             //- Content Container
-            div.container.col-md-8.col-10
+            div.container.col-md-8.col-10.__admin_content
                 div.mt-5
-                    div.__schema_header_container
-                        div.card.__schema_header
-                            h1.text-center.mt-2 Schema
+                    div.__admin_header_container
+                        div.__admin_header
+                            h1.text-center.mt-2 Categories
                             p.w-100.text-center.text-muted This is how your content is set up
-                        div.card.__schema_heading
+                        div.card
                             div.row.g-0.justify-content-center
-                                div.col-10.__table_container
-                                    if tables.length > 1
+                                div.col-10.__admin_table_container
+                                    if tables.length > 2
                                         each table, index in tables 
                                             if table != 'users' && table != 'api_keys'
-                                                table.table.__schema_table
+                                                table.table.__admin_table
                                                     thead 
                                                         tr 
                                                             th #{table.toUpperCase()}
@@ -70,4 +70,5 @@ html
                                                                             p #{cols.name}
                                                 hr
                                     else 
-                                        h3.text-center(style="margin: 3rem;") You don't have any categories set!
+                                        h3.__categories_no_categories You don't have any categories set!
+                                        p.text-muted Start creating categories and they will show up here

@@ -29,7 +29,7 @@ html
                             a.nav-link.dropdown-toggle.active(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Admin
                             ul.dropdown-menu
                                 li
-                                    a.dropdown-item.active(href="/admin/schema" aria-current="page" style="cursor: pointer;") Schema
+                                    a.dropdown-item.active(href="/admin/categories" aria-current="page" style="cursor: pointer;") Categories
                                 li
                                     a.dropdown-item(href="/admin/create-category" style="cursor: pointer;") Create Category
                                 li
@@ -44,14 +44,14 @@ html
         div.row.g-0.justify-content-center
 
             //- Content Container
-            div.container.col-md-8.col-10
+            div.container.col-md-8.col-10.__admin_content
                 div.mt-5
-                    div.__schema_header_container
-                    div.card.__schema_header
+                    div.__admin_header_container
+                    div.__admin_header
                         h1.text-center.mt-2 New Category
                         p#counter
                         p.w-100.text-center.text-muted Categories separate your content
-                    div.card.__schema_heading
+                    div.__admin_heading
                         div.row.justify-content-center.g-0
                             form.col-10#NewCategoryForm(action="/admin/create-category" method="POST")
                                 input#AttributeCounter(type="hidden" value="1" readonly)
@@ -60,8 +60,10 @@ html
                                     input.form-control#CategoryName(type="text" name="CategoryName")
 
                                 div.row.justify-content-center 
-                                    button.btn.btn-primary#AddAttributeButton(style="width: auto;") Add Attribute
-                                    button.btn.btn-success.__category_submit_button(style="width: auto; height: auto;" type="submit") Submit
+                                    button.btn#AddAttributeButton Add Attribute
+                                    button.btn.__category_submit_button(type="submit") Submit
+                                
+                                div#AttributeList
 
         script.
 
@@ -73,10 +75,11 @@ html
             //- Add Attribute to form
             //- Dynamically assigns depending on the number of attributes that have been added
             //- Utilizes a hidden input to keep the names from clashing
+            //- Dynamically creates remove event listener
             function addAttribute() {
                 //- Get hidden counter
                 var counter = document.getElementById("AttributeCounter")
-                var form = document.getElementById("NewCategoryForm")
+                var form = document.getElementById("AttributeList")
                 //- Input container Creation
                 var attributeDiv = document.createElement("div")
                 attributeDiv.classList.add("mb-3")
@@ -103,7 +106,9 @@ html
                 //- Title Input Creation
                 var titleInput = document.createElement("input")
                 titleInput.classList.add("form-control")
+                titleInput.setAttribute('onchange', "checkIfAttributeEmpty('titleInput" + counter.value + "');")
                 titleInput.name = "titleInput" + counter.value
+                titleInput.id = "titleInput" + counter.value
                 //- Type Label Creation
                 var typeLabel = document.createElement("label")
                 typeLabel.classList.add("form-label")
@@ -153,10 +158,4 @@ html
 
                 //- Increase Counter
                 counter.value = parseInt(counter.value) + 1
-            }
-
-            function removeAttribute(id) {
-                document.getElementById("counter").value = 1000
-                var elem = document.getElementById(id)
-                elem.innerHTML = "HI"
             }

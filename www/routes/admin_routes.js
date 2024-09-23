@@ -59,8 +59,11 @@ router.get('/delete-category', isAdminAuth, async (req, res) => {
 });
 
 router.get('/api-keys', isAdminAuth, async (req, res) => {
-    api_keys = await datahandler.get_api_keys()
-    res.render('api_keys', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, api_keys: api_keys })
+    let raw_categories = await datahandler.get_table_names()
+    let categories = raw_categories.filter(x => x.name !== 'users' && x.name !== 'api_keys')
+    let api_keys = await datahandler.get_api_keys()
+    console.log(api_keys)
+    res.render('api_keys', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, api_keys: api_keys, categories: categories })
 });
 
 router.post('/api-keys', isAdminAuth, async (req, res) => {
@@ -68,8 +71,13 @@ router.post('/api-keys', isAdminAuth, async (req, res) => {
     res.redirect('/admin/api-keys')
 })
 
+router.post('/api-key-categories', isAdminAuth, async (req, res) => {
+    const categories = await datahandler.assign_api_key_categories(req.query.key, Object.keys(req.body))
+    res.redirect('/admin/api-keys')
+})
+
 router.get('/delete-api-key', isAdminAuth, async (req, res) => {
-    const api_key = await datahandler.delete_api_key(req.query.name)
+    const api_key = await datahandler.delete_api_key(req.query.key)
     res.redirect('/admin/api-keys')
 })
 

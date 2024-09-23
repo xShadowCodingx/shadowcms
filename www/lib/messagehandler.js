@@ -50,6 +50,11 @@ const message_handler = (message) => {
                 type: 'success',
                 message: "User deactivated successfully."
             })
+        case 'key_categories_assigned':
+            return ({
+                type: 'success',
+                message: "Categories assigned successfully."
+            })
     }
 }
 

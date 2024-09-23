@@ -8,14 +8,13 @@ body {
 
 /* Universal */
 
-.__input {
-    position: relative;
+.__modal_delete_button {
+    margin-right: 1rem;
 }
 
-.__input_tooltip {
-    position: absolute;
-    top: 0;
-    left: 0;
+.__clickable_table_data:hover {
+    cursor: pointer;
+    background-color: #a8a8a8 !important;
 }
 
 /* Icons */
@@ -43,8 +42,8 @@ body {
     background-color: rgb(7, 241, 241);
 }
 
-.__settings_icon {
-    background-color: rgb(170, 170, 170);
+.__copy_icon {
+    background-color: rgb(156, 232, 255);
 }
 
 .__deactivate_user_icon {
@@ -53,6 +52,14 @@ body {
 
 .__reactivate_user_icon {
     background-color: rgb(28, 243, 28);
+}
+
+.__info_icon {
+    background-color: rgb(61, 250, 4);
+}
+
+.__settings_icon{
+    background-color: rgb(201, 144, 255);
 }
 
 /* Login Page */
@@ -161,8 +168,25 @@ body {
 
 /* Admin Panel - Api Keys */
 
+.__api_key_list_container {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 1rem;
+}
+
+.__api_key_list_item {
+    border: 1px solid rgb(206, 206, 206);
+    margin: 2px;
+    padding: 5px;
+}
+
 #APIKeyList {
     max-height: 300px;
     overflow: auto;
     margin-bottom: 1rem;
+}
+
+.__invisible_key {
+    display: none;
 }

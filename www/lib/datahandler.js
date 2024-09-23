@@ -67,6 +67,10 @@ const API_Keys = sequelize.define(
         key: {
             type: Sequelize.STRING,
             allowNull: false
+        },
+        categories: {
+            type: Sequelize.JSON,
+            allowNull: true
         }
     }
 )
@@ -98,13 +102,12 @@ const check_for_user = async () => {
 // Create user
 const create_first_user = async (email, password) => {
     try {
-        await hashing.hash_password(password).then(async (pw) => {
-            await User.create({
-                email: email,
-                password: pw,
-                active: true,
-                admin: true
-            })
+        const pw = hashing.hash_password(password)
+        await User.create({
+            email: email,
+            password: pw,
+            active: true,
+            admin: true
         })
         loghandler('success', 'User created successfully.')
     } catch (error) {
@@ -209,8 +212,14 @@ const get_api_keys = async () => {
 
 const create_api_key = async (api_key) => {
     var key = uuidv4()
-    const name = api_key.name
+    var name = api_key.name
     key = key.replace(/-/g, "")
+    name = name.replace(/[^a-zA-Z0-9_\s]/g, '')
+    name = name.replace(/\s/g, "_")
+    if (!/[a-zA-Z]/.test(name[0])) {
+        name = "_" + name.slice(1);
+    }
+    
     let new_key = await API_Keys.create({
         name: name,
         key: key
@@ -218,10 +227,16 @@ const create_api_key = async (api_key) => {
     return messagehandler('key_created')
 }
 
-const delete_api_key = async (api_key_name) => {
-    const key = await API_Keys.findOne({ where: { name: api_key_name } })
+const delete_api_key = async (api_key) => {
+    const key = await API_Keys.findOne({ where: { key: api_key } })
     await key.destroy()
     return messagehandler('key_deleted')
+}
+
+const assign_api_key_categories = async (api_key, categories) => {
+    const key = await API_Keys.findOne({ where: { key: api_key } })
+    const categories_assigned = await key.update({ categories: categories })
+    return messagehandler('key_categories_assigned')
 }
 
 const get_users = async () => {
@@ -321,6 +336,7 @@ module.exports = {
     get_api_keys,
     create_api_key,
     delete_api_key,
+    assign_api_key_categories,
     get_users,
     create_user,
     get_user_by_id,

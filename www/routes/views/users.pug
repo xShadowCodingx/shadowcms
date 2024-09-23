@@ -80,8 +80,8 @@ html
                                                 if user.id != 1
                                                     tr
                                                         td(id=user.email) 
-                                                            a(href="/admin/deactivate-user?user=" + user.id)
-                                                                img(src="/images/icons/trash.png" width="20" height="20" style="display: inline;")
+                                                            a.__icon.__deactivate_user_icon(href="/admin/deactivate-user?user=" + user.id)
+                                                                img(src="/images/icons/deactivate_user.png" width="20" height="20" style="display: inline;")
                                                             p(style="display: inline;") #{user.email}
                             
                             if inactive_users
@@ -97,6 +97,8 @@ html
                                                     each i_user in inactive_users 
                                                         tr
                                                             td(id=i_user.email) 
-                                                                a(href="/admin/delete-user?user=" + i_user.id)
+                                                                a.__icon.__reactivate_user_icon(href="/admin/reactivate-user?user=" + i_user.id)
+                                                                    img(src="/images/icons/reactivate_user.png" width="20" height="20" style="display: inline;")
+                                                                a.__icon.__delete_icon(href="/admin/delete-user?user=" + i_user.id)
                                                                     img(src="/images/icons/trash.png" width="20" height="20" style="display: inline;")
                                                                 p(style="display: inline;") #{i_user.email}

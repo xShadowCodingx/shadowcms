@@ -6,49 +6,13 @@ body {
     background-repeat: repeat;
 }
 
-.__login_container {
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.__login_card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    background-color: rgba(255, 252, 252, 0.726);
-}
-
-.__logo_container {
-    margin: 1rem 0;
-}
-
-.__logo {
-    width: 150px;
-    height: 150px;
-    border-radius: 10px;
-}
-
-.__login_card form {
-    text-align: left;
-    font-weight: 700;
-}
-
-.__login_card form button:first-of-type {
-    margin-right: 1rem;
-}
+/* Icons */
 
 .__icon {
     display: inline-block;
     margin-left: 10px;
-    height: 30px !important;
-    width: 30px !important;
+    height: 25px !important;
+    width: 25px !important;
     cursor: pointer;
     border-radius: 5px;
     padding: 2px;
@@ -71,8 +35,51 @@ body {
     background-color: rgb(170, 170, 170);
 }
 
-#NewCategoryForm {
-    padding: 10px !important;
+.__deactivate_user_icon {
+    background-color: rgb(243, 168, 28);
+}
+
+.__reactivate_user_icon {
+    background-color: rgb(28, 243, 28);
+}
+
+/* Login Page */
+
+.__login_container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-position: center;
+    background-repeat: repeat;
+}
+
+.__login_card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(255, 252, 252, 0.863);
+}
+
+.__logo_container {
+    margin: 1rem 0;
+}
+
+.__logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.__login_card form {
+    text-align: left;
+    font-weight: 700;
+}
+
+.__login_card form button:first-of-type {
+    margin-right: 1rem;
 }
 
 /* Admin Panel - Universal */
@@ -109,6 +116,10 @@ body {
 #AttributeList {
     max-height: 300px;
     overflow-y: auto;
+}
+
+#NewCategoryForm {
+    padding: 10px !important;
 }
 
 #AddAttributeButton{

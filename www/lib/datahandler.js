@@ -280,6 +280,13 @@ const deactivate_user_by_id = async (id) => {
     return messagehandler('user_deactivated')
 }
 
+const reactivate_user_by_id = async (id) => {
+    const user = await get_user_by_id(id)
+    const reactivated_user = await user.update({ active: true })
+    loghandler('success', 'User reactivated successfully.')
+    return messagehandler('user_reactivated')
+}
+
 const get_active_users = async () => {
     const users = await User.findAll({ where: { active: true } })
     return users
@@ -321,5 +328,6 @@ module.exports = {
     deactivate_user_by_id,
     get_active_users,
     get_inactive_users,
-    check_if_active
+    check_if_active,
+    reactivate_user_by_id
 }

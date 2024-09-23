@@ -94,4 +94,9 @@ router.get('/deactivate-user', isAdminAuth, async (req, res) => {
     res.redirect("/admin/users")
 })
 
+router.get('/reactivate-user', isAdminAuth, async (req, res) => {
+    const reactivated_user = await datahandler.reactivate_user_by_id(req.query.user)
+    res.redirect("/admin/users")
+})
+
 module.exports = router;

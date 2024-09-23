@@ -12,9 +12,20 @@ body {
     margin-right: 1rem;
 }
 
-.__clickable_table_data:hover {
-    cursor: pointer;
-    background-color: #a8a8a8 !important;
+.__notification_container {
+    position: relative;
+}
+
+.__notification {
+    position: absolute;
+    top:20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+}
+
+.__notification p {
+    margin: auto;
 }
 
 /* Icons */

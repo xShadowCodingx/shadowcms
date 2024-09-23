@@ -23,7 +23,7 @@ const message_handler = (message) => {
         case 'key_created':
             return ({
                 type: 'success',
-                message: "API key created successfully."
+                message: "API key created."
             })
         case 'key_deleted':
             return ({

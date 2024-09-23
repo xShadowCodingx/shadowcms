@@ -45,6 +45,23 @@ html
 
             //- Content Container
             div.container.col-md-8.col-10.__admin_content
+                div.__notification_container
+                    if give_alert
+                        if give_alert.type == 'success'
+                            div.__notification.alert.alert-success.text-center#ShadowCMSAlert
+                                img(src="/images/icons/success.png" height="100" width="100")
+                                p #{give_alert.message}
+                                script. 
+                                    setTimeout(() => {
+                                        document.getElementById("ShadowCMSAlert").classList.add("__invisible_key");
+                                    }, 2500)
+                        else if give_alert.type == 'error'
+                            div.__notification.alert.alert-danger.text-center#ShadowCMSAlert
+                                p #{give_alert.message}
+                                    script. 
+                                        setTimeout(() => {
+                                            document.getElementById("ShadowCMSAlert").classList.add("__invisible_key");
+                                        }, 2500)
                 div.mt-5
                     div.__admin_header_container
                     div.__admin_header
@@ -161,4 +178,4 @@ html
             async function createCopy(id) {
                 let key = document.getElementById(id)
                 await navigator.clipboard.writeText(key.textContent)
-            }                    
+            }

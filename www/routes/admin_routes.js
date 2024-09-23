@@ -4,7 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const datahandler = require('../lib/datahandler')
-const cms_settings = require('../lib/settings')
+const cms_settings = require('../lib/settings');
+const message_handler = require('../lib/messagehandler');
 
 const isAdminAuth = (req, res, next) => {
     if (req.session.isAuth) {
@@ -62,13 +63,18 @@ router.get('/api-keys', isAdminAuth, async (req, res) => {
     let raw_categories = await datahandler.get_table_names()
     let categories = raw_categories.filter(x => x.name !== 'users' && x.name !== 'api_keys')
     let api_keys = await datahandler.get_api_keys()
+    let give_alert = message_handler(req.query.alert)
     console.log(api_keys)
-    res.render('api_keys', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, api_keys: api_keys, categories: categories })
+    res.render('api_keys', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, api_keys: api_keys, categories: categories, give_alert: give_alert })
 });
 
 router.post('/api-keys', isAdminAuth, async (req, res) => {
-    const api_key = await datahandler.create_api_key(req.body)
-    res.redirect('/admin/api-keys')
+    try {
+        const api_key = await datahandler.create_api_key(req.body)
+        res.redirect('/admin/api-keys?alert=key_created')
+    } catch (error) {
+        res.send("There was an error creating the API key: " + error)
+    }
 })
 
 router.post('/api-key-categories', isAdminAuth, async (req, res) => {

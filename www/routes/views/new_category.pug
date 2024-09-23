@@ -57,7 +57,7 @@ html
                                 input#AttributeCounter(type="hidden" value="1" readonly)
                                 div.mb-5
                                     label.form-label(for="CategoryName") Category Name 
-                                    input.form-control#CategoryName(type="text" name="CategoryName")
+                                    input.form-control#CategoryName(type="text" name="CategoryName" required)
 
                                 div.row.justify-content-center 
                                     button.btn#AddAttributeButton Add Attribute
@@ -109,6 +109,7 @@ html
                 titleInput.setAttribute('onchange', "checkIfAttributeEmpty('titleInput" + counter.value + "');")
                 titleInput.name = "titleInput" + counter.value
                 titleInput.id = "titleInput" + counter.value
+                titleInput.required = true
                 //- Type Label Creation
                 var typeLabel = document.createElement("label")
                 typeLabel.classList.add("form-label")
@@ -117,6 +118,7 @@ html
                 var typeInput = document.createElement("select")
                 typeInput.classList.add("form-select")
                 typeInput.name = "typeInput" + counter.value
+                typeInput.required = true
                 //- Type Options Creation
                 //- Adds directly to the Type Input
                 var typeArray = [

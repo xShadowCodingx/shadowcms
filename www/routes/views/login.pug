@@ -24,11 +24,11 @@ html
                 form(action="/login" method="POST").row.justify-content-center.g-0
 
                     div.mb-3.col-10
-                        label(for="email").form-label Email
-                        input(type="email" name="Email")#Email.form-control
+                        label(for="Email").form-label Email
+                        input(type="email" name="Email" required)#Email.form-control
                     div.mb-3.col-10
-                        label(for="password").form-label Password
-                        input(type="password" name="Password")#Password.form-control 
+                        label(for="Password").form-label Password
+                        input(type="password" name="Password" required)#Password.form-control 
                     div.mb-3.col-10.text-center
                         button(type="submit").btn.btn-primary Log In
                         a(href="#").btn.btn-danger Forgot Password

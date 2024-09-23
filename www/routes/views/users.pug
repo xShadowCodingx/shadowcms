@@ -57,10 +57,10 @@ html
                             form.col-10#NewCategoryForm(action="/admin/users" method="POST")
                                 div.mb-5
                                     label.form-label.col-md-6(for="Email") Email 
-                                    input.form-control#Email(type="text" name="Email")
+                                    input.form-control#Email(type="text" name="Email" required)
                                 div.mb-5
                                     label.form-label.col-md-6(for="TemporaryPassword") Temporary Password
-                                    input.form-control#TemporaryPassword(type="text" name="TemporaryPassword")
+                                    input.form-control#TemporaryPassword(type="text" name="TemporaryPassword" required)
                                 div.mb-5
                                     input.form-check-input(type="checkbox" value="true" id="AdminCheckbox" style="margin-right: 1rem;" name="Admin")
                                     label.form-check-label(for="AdminCheckbox") Admin

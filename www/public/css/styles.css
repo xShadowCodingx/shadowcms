@@ -6,11 +6,23 @@ body {
     background-repeat: repeat;
 }
 
+/* Universal */
+
+.__input {
+    position: relative;
+}
+
+.__input_tooltip {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 /* Icons */
 
 .__icon {
     display: inline-block;
-    margin-left: 10px;
+    margin: 0px 3px;
     height: 25px !important;
     width: 25px !important;
     cursor: pointer;
@@ -28,7 +40,7 @@ body {
 }
 
 .__edit_icon {
-    background-color: aqua;
+    background-color: rgb(7, 241, 241);
 }
 
 .__settings_icon {

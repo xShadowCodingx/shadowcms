@@ -57,7 +57,7 @@ html
                             form.col-10#NewCategoryForm(action="/admin/api-keys" method="POST")
                                 div.mb-5
                                     label.form-label.col-md-6(for="KeyName") Name for the API key 
-                                    input.form-control#KeyName(type="text" name="name")
+                                    input.form-control#KeyName(type="text" name="name" required)
 
                                 div.row.justify-content-center 
                                     button.btn.btn-success.__category_submit_button(style="width: auto; height: auto;" type="submit") Add API Key

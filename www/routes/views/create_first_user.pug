@@ -16,15 +16,15 @@ html
                 form(action="/login/first_user" method="POST").row.justify-content-center.g-0
                     div.mb-3.col-10
                         label(for="email").form-label Email
-                        input(type="email" name="Email")#EmailInput.form-control
+                        input(type="email" name="Email" required)#EmailInput.form-control
                     div.mb-3.col-10
                         label(for="email").form-label Verify Email
-                        input(type="email" name="VerifyEmail")#EmailVerificationInput.form-control
+                        input(type="email" name="VerifyEmail" required)#EmailVerificationInput.form-control
                     div.mb-3.col-10
                         label(for="password").form-label Password
-                        input(type="password" name="Password")#PasswordInput.form-control 
+                        input(type="password" name="Password" required)#PasswordInput.form-control 
                     div.mb-3.col-10
                         label(for="password").form-label Verify Password
-                        input(type="password" name="VerifyPassword")#PasswordVerificationInput.form-control 
+                        input(type="password" name="VerifyPassword" required)#PasswordVerificationInput.form-control 
                     div.mb-3.col-10.text-center
                         button(type="submit").btn.btn-primary Create Account

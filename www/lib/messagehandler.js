@@ -55,6 +55,16 @@ const message_handler = (message) => {
                 type: 'success',
                 message: "Categories assigned successfully."
             })
+        case 'project_created':
+            return ({
+                type: 'success',
+                message: "Project created successfully."
+            })
+        case 'project_deleted':
+            return ({
+                type: 'success',
+                message: "Project deleted successfully."
+            })
     }
 }
 

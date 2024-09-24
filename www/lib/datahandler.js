@@ -75,6 +75,33 @@ const API_Keys = sequelize.define(
     }
 )
 
+const Projects = sequelize.define(
+    'projects',
+    {
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        cors: {
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
+        cors_url: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        api_key: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
+        description: {
+            type: Sequelize.BLOB,
+            allowNull: true
+        }
+    }
+)
+
 // Create Tables
 const create_tables = async () => {
     try {
@@ -321,6 +348,47 @@ const check_if_active = async (id) => {
     }
 }
 
+const create_project = async (project) => {
+    try {
+        console.log(project)
+        let api_key = null
+        let cors = false
+        let cors_url = null
+        if(project.APIKeySelection !== "no") {
+            api_key = project.APIKeySelection
+        }
+        if(project.CORSSelect == "yes") {
+            cors = true
+            cors_url = project.CORSUrl
+        }
+        let new_project = await Projects.create({
+            name: project.name,
+            description: project.description,
+            api_key: api_key,
+            cors: cors,
+            cors_url: cors_url
+        })
+    } catch (error) {
+        loghandler('error', 'Unable to see if project exists: ' + error)
+    }
+}
+
+const get_projects = async () => {
+    const projects = await Projects.findAll()
+    return projects
+}
+
+const get_project_by_id = async (id) => {
+    const project = await Projects.findOne({ where: { id: id } })
+    return project
+}
+
+const delete_project = async (project) => {
+    const deleted_project = await project.destroy()
+    loghandler('success', 'Project deleted successfully.')
+    return messagehandler('project_deleted')
+}
+
 module.exports = {
     sequelize,
     test_connection,
@@ -345,5 +413,9 @@ module.exports = {
     get_active_users,
     get_inactive_users,
     check_if_active,
-    reactivate_user_by_id
+    reactivate_user_by_id,
+    create_project,
+    get_projects,
+    get_project_by_id,
+    delete_project
 }

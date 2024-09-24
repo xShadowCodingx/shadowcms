@@ -18,26 +18,38 @@ html
                 div.collapse.navbar-collapse#cmsNav
                     ul.navbar-nav
                         li.nav-item
-                            a.nav-link(href="/dashboard") Dashboard
-                        li.nav-item
-                            a.nav-link(href="#") Link
-                        li.nav-item
-                            a.nav-link(href="#") Link
-                        li.nav-item
-                            a.nav-link(href="#") Link
-                        li.nav-item.dropdown
-                            a.nav-link.dropdown-toggle.active(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Admin
-                            ul.dropdown-menu
-                                li
-                                    a.dropdown-item.active(href="/admin/schema" aria-current="page" style="cursor: pointer;") Schema
-                                li
-                                    a.dropdown-item(href="/admin/create-category" style="cursor: pointer;") Create Category
-                                li
-                                    a.dropdown-item(href="/admin/api-keys" style="cursor: pointer;") API Keys
-                                li
-                                    hr.dropdown-divider
-                                li
-                                    a.dropdown-item(href="/admin/users" style="cursor: pointer;") Users
+                            a.nav-link.active(aria-current="page" href="/") Dashboard
+                            li.nav-item.dropdown 
+                                a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Content 
+                                ul.dropdown-menu 
+                                    li 
+                                        a.dropdown-item(href="/view-content") View Content 
+                                    li
+                                        a.dropdown-item(href="/create-content") Create Content 
+                                    li 
+                                        hr.dropdown-divider
+                                    li 
+                                        a.dropdown-item(href="/view-projects") View Projects 
+                                    li 
+                                        a.dropdown-item(href="/create-project") Create Projects
+                            li.nav-item
+                                a.nav-link(href="/manage-cdn") CDN
+                            li.nav-item
+                                a.nav-link(href="#") Profile
+                            if admin == true
+                            li.nav-item.dropdown
+                                a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Admin
+                                ul.dropdown-menu
+                                    li
+                                        a.dropdown-item(href="/admin/categories") Categories
+                                    li
+                                        a.dropdown-item(href="/admin/create-category") Create Category
+                                    li
+                                        a.dropdown-item(href="/admin/api-keys") API Keys
+                                    li
+                                        hr.dropdown-divider
+                                    li
+                                    a.dropdown-item(href="/admin/users") Users
                         li.nav-item
                             a.nav-link.text-danger.active(href="/login/logout") Log Out
 

@@ -18,26 +18,38 @@ html
                 div.collapse.navbar-collapse#cmsNav
                     ul.navbar-nav
                         li.nav-item
-                            a.nav-link(href="/dashboard") Dashboard
-                        li.nav-item
-                            a.nav-link(href="#") Link
-                        li.nav-item
-                            a.nav-link(href="#") Link
-                        li.nav-item
-                            a.nav-link(href="#") Link
-                        li.nav-item.dropdown
-                            a.nav-link.dropdown-toggle.active(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Admin
-                            ul.dropdown-menu
+                            a.nav-link.active(aria-current="page" href="/") Dashboard
+                        li.nav-item.dropdown 
+                            a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Content 
+                            ul.dropdown-menu 
+                                li 
+                                    a.dropdown-item(href="/view-content") View Content 
                                 li
-                                    a.dropdown-item.active(href="/admin/categories" aria-current="page" style="cursor: pointer;") Categories
-                                li
-                                    a.dropdown-item(href="/admin/create-category" style="cursor: pointer;") Create Category
-                                li
-                                    a.dropdown-item(href="/admin/api-keys" style="cursor: pointer;") API Keys
-                                li
+                                    a.dropdown-item(href="/create-content") Create Content 
+                                li 
                                     hr.dropdown-divider
-                                li
-                                    a.dropdown-item(href="/admin/users" style="cursor: pointer;") Users
+                                li 
+                                    a.dropdown-item(href="/view-projects") View Projects 
+                                li 
+                                    a.dropdown-item(href="/create-project") Create Projects
+                        li.nav-item
+                            a.nav-link(href="/manage-cdn") CDN
+                        li.nav-item
+                            a.nav-link(href="#") Profile
+                        if admin == true
+                            li.nav-item.dropdown
+                                a.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false") Admin
+                                ul.dropdown-menu
+                                    li
+                                        a.dropdown-item(href="/admin/categories") Categories
+                                    li
+                                        a.dropdown-item(href="/admin/create-category") Create Category
+                                    li
+                                        a.dropdown-item(href="/admin/api-keys") API Keys
+                                    li
+                                        hr.dropdown-divider
+                                    li
+                                    a.dropdown-item(href="/admin/users") Users
                         li.nav-item
                             a.nav-link.text-danger.active(href="/login/logout") Log Out
 
@@ -91,7 +103,7 @@ html
                                                     img(src="/images/icons/info.png" height="20" width="20" style="display: inline;")
                                                 button.__icon.__copy_icon(type="button" onclick=`createCopy("${key.key}")`)
                                                     img(src="/images/icons/copy.png" height="20" width="20" style="display: inline;")
-                                            h4.__api_key_list_name(data-bs-toggle="modal" data-bs-target="#ModalFor"+key.key) #{key.name}
+                                            h4.__api_key_list_name #{key.name}
                                             p.__invisible_key(id=key.key) #{key.key}
 
                                         div.modal(id="ModalDeleteFor"+key.key tabindex="-1")

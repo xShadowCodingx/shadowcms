@@ -28,6 +28,21 @@ body {
     margin: auto;
 }
 
+/* Non-Admin Panels */
+/* Universal */
+.__main_content_container {
+    background-color: white;
+}
+
+.__special_formatting > h5 > p {
+    display: inline;
+}
+
+.__special_formatting > p {
+    display: inline;
+}
+
+
 /* Icons */
 
 .__icon {

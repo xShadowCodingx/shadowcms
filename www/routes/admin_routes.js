@@ -30,7 +30,7 @@ router.get('/categories', isAdminAuth, async (req, res) => {
             let cols = await datahandler.get_column_names(i.name)
             columns.push(cols)
         }
-        res.render('schema', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, tables: table_names, columns: columns })
+        res.render('schema', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, tables: table_names, columns: columns, admin: req.session.isAdmin })
     } catch (error) {
         res.send("There was an error logging in: " + error)
     }
@@ -38,7 +38,7 @@ router.get('/categories', isAdminAuth, async (req, res) => {
 
 router.get('/create-category', isAdminAuth, async (req, res) => {
     const references = await datahandler.get_table_names()
-    res.render('new_category', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, references: references })
+    res.render('new_category', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, references: references, admin: req.session.isAdmin })
 });
 
 router.post('/create-category', isAdminAuth, async (req, res) => {
@@ -61,11 +61,11 @@ router.get('/delete-category', isAdminAuth, async (req, res) => {
 
 router.get('/api-keys', isAdminAuth, async (req, res) => {
     let raw_categories = await datahandler.get_table_names()
-    let categories = raw_categories.filter(x => x.name !== 'users' && x.name !== 'api_keys')
+    let categories = raw_categories.filter(x => x.name !== 'users' && x.name !== 'api_keys' && x.name !== 'projects')
     let api_keys = await datahandler.get_api_keys()
     let give_alert = message_handler(req.query.alert)
     console.log(api_keys)
-    res.render('api_keys', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, api_keys: api_keys, categories: categories, give_alert: give_alert })
+    res.render('api_keys', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, api_keys: api_keys, categories: categories, give_alert: give_alert, admin: req.session.isAdmin })
 });
 
 router.post('/api-keys', isAdminAuth, async (req, res) => {
@@ -90,7 +90,7 @@ router.get('/delete-api-key', isAdminAuth, async (req, res) => {
 router.get('/users', isAdminAuth, async (req, res) => {
     const active_users = await datahandler.get_active_users()
     const inactive_users = await datahandler.get_inactive_users()
-    res.render('users', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, users: active_users, inactive_users: inactive_users })
+    res.render('users', { title: cms_settings.title, image_url: cms_settings.logo, image_alt: cms_settings.logo_alt, background_image_url: cms_settings.background_image, users: active_users, inactive_users: inactive_users, admin: req.session.isAdmin })
 })
 
 router.post('/users', isAdminAuth, async (req, res) => {

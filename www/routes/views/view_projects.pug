@@ -155,19 +155,13 @@ html
                                             h5.text-center Project: #{project.name}
                                             form.col-10(action="/edit-project" method="POST")
                                                 div.mb-5.__invisible_key
-                                                    input.form-control(type="text" name="name" readonly value=project.id)
+                                                    input.form-control(type="text" name="id" readonly value=project.id)
                                                 div.mb-5(id="CORSSelectAreaFor"+project.id)
                                                 div.mb-5(id="CORSUrlFor"+project.id)
-                                                div.mb-5(id="APIKeyForm"+project.id)
-                                                    //- Need to make this dynamic
-                                                    label.form-label(for="APIKeySelection") What API Key do you want to link?
-                                                    select.form-select(aria-label="API Key Selection" name="APIKeySelection" required)
-                                                        option(value="no" selected) Select an API Key 
-                                                        each key in api_keys 
-                                                            option(value=key.key) #{key.name}
+                                                div.mb-5(id="APIKeyAreaFor"+project.id)
                                                 div.mb-5 
-                                                    label.form-label(for="ProjectDescription") Description
-                                                    textarea.form-control#ProjectDescription(rows="3" name="description" required)
+                                                    label.form-label(for="ProjectDescription"+project.id) Description
+                                                    textarea.form-control(id="ProjectDescriptionFor"+project.id rows="3" name="description" required)
 
                                                 div.row.justify-content-center 
                                                     button.btn.btn-success.__category_submit_button(type="submit") Modify
@@ -234,6 +228,43 @@ html
                                         cors_url_area.appendChild(cors_url_label)
                                         cors_url_area.appendChild(cors_url_input)
                                     }
+                                    var key_array = []
+                                    key_array.push('#{api_keys.map(key => {return [key.name, key.key]})}')
+                                    var api_key_area = document.getElementById("APIKeyAreaFor"+'#{project.id}')
+                                    var api_key_label = document.createElement("label")
+                                    api_key_label.classList.add("form-label")
+                                    api_key_label.textContent = "What API Key do you want to link?"
+                                    api_key_label.setAttribute("for", "APIKeysFor"+'#{project.id}')
+                                    api_key_select = document.createElement('select')
+                                    api_key_select.classList.add("form-select")
+                                    api_key_select.setAttribute("id", "APIKeysFor"+'#{project.id}')
+                                    api_key_select.setAttribute("aria-label", "API Key Selection")
+                                    api_key_select.name = "APIKeySelection"
+                                    api_key_select.required = true
+                                    api_key_area.appendChild(api_key_label)
+                                    api_key_area.appendChild(api_key_select)
+                                    var no_key_option = document.createElement('option')
+                                    no_key_option.value = "no"
+                                    no_key_option.textContent = "Select an API Key"
+                                    api_key_select.appendChild(no_key_option)
+                                    for(i=0; i < key_array.length; i++){
+                                        if(key_array[i].split(',')[1] === '#{project.api_key}'){
+                                            let new_option = document.createElement('option')
+                                            new_option.value = key_array[i].split(',')[1]
+                                            new_option.textContent = key_array[i].split(',')[0]
+                                            new_option.selected = true
+                                            api_key_select.appendChild(new_option)
+                                        } else {
+                                            let new_option = document.createElement('option')
+                                            new_option.value = key_array[i].split(',')[1]
+                                            new_option.textContent = key_array[i].split(',')[0]
+                                            api_key_select.appendChild(new_option)
+                                        }
+                                    }
+                                    var description_input = document.getElementById("ProjectDescriptionFor"+'#{project.id}')
+                                    description_input.value = '#{project.description}'
+
+
 
         script.
             async function createCopy(id) {

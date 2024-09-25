@@ -78,8 +78,8 @@ router.get('/delete-project', isAuth, async (req, res) => {
 
 router.post('/edit-project', isAuth, async (req, res) => {
     res.status(200);
-    console.log(req.body)
-    res.redirect('/view-projects?alert=project_updated');
+    const edited_project = await datahandler.edit_project(req.body);
+    res.redirect('/view-projects?alert=project_edited');
 });
 
 module.exports = router;

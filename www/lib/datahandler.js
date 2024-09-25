@@ -350,7 +350,6 @@ const check_if_active = async (id) => {
 
 const create_project = async (project) => {
     try {
-        console.log(project)
         let api_key = null
         let cors = false
         let cors_url = null
@@ -389,6 +388,30 @@ const delete_project = async (project) => {
     return messagehandler('project_deleted')
 }
 
+const edit_project = async (project) => {
+    try {
+        let current_project = await Projects.findOne({ where: { id: project.id } })
+        let api_key = null
+        let cors = false
+        let cors_url = null
+        if(project.APIKeySelection !== "no") {
+            api_key = project.APIKeySelection
+        }
+        if(project.CORSSelect == "yes") {
+            cors = true
+            cors_url = project.CORSUrl
+        }
+        current_project.api_key = api_key
+        current_project.cors = cors
+        current_project.cors_url = cors_url
+        current_project.description = project.description
+        await current_project.save()
+        return messagehandler('project_edited')
+    } catch (error) {
+        loghandler('error', 'Unable to update project: ' + error)
+    }
+}
+
 module.exports = {
     sequelize,
     test_connection,
@@ -417,5 +440,6 @@ module.exports = {
     create_project,
     get_projects,
     get_project_by_id,
-    delete_project
+    delete_project,
+    edit_project
 }

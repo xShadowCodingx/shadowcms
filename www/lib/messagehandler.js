@@ -65,6 +65,11 @@ const message_handler = (message) => {
                 type: 'success',
                 message: "Project deleted successfully."
             })
+            case 'project_edited':
+                return ({
+                    type: 'success',
+                    message: "Project edited successfully."
+                })
     }
 }
 

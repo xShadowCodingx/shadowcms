@@ -153,19 +153,15 @@ html
                                             button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
                                         div.modal-body.row.justify-content-center.g-0
                                             h5.text-center Project: #{project.name}
-                                            form.col-10#EditProjectForm(action="/edit-project" method="POST")
+                                            form.col-10(action="/edit-project" method="POST")
                                                 div.mb-5.__invisible_key
-                                                    label.form-label(for="ProjectName") Project Name
-                                                    input.form-control#ProjectName(type="text" name="name" readonly value=project.name)
-                                                div.mb-5
-                                                    label.form-label(for="CORSSelect") Do you want CORS restrictions?
-                                                    select.form-select#CORSSelect(aria-label="CORS Selection" onchange="checkCORS();" name="CORSSelect" required)
-                                                        option(selected value="no") No 
-                                                        option(value="yes") Yes
-                                                div.mb-5#CORSUrl
-                                                div.mb-5 
+                                                    input.form-control(type="text" name="name" readonly value=project.id)
+                                                div.mb-5(id="CORSSelectAreaFor"+project.id)
+                                                div.mb-5(id="CORSUrlFor"+project.id)
+                                                div.mb-5(id="APIKeyForm"+project.id)
+                                                    //- Need to make this dynamic
                                                     label.form-label(for="APIKeySelection") What API Key do you want to link?
-                                                    select.form-select#APIKeySelection(aria-label="API Key Selection" name="APIKeySelection" required)
+                                                    select.form-select(aria-label="API Key Selection" name="APIKeySelection" required)
                                                         option(value="no" selected) Select an API Key 
                                                         each key in api_keys 
                                                             option(value=key.key) #{key.name}
@@ -173,10 +169,71 @@ html
                                                     label.form-label(for="ProjectDescription") Description
                                                     textarea.form-control#ProjectDescription(rows="3" name="description" required)
 
-
                                                 div.row.justify-content-center 
                                                     button.btn.btn-success.__category_submit_button(type="submit") Modify
-                                            
+                                script.
+                                    if('#{project.cors}' == 'false') {
+                                        const cors_select_area = document.getElementById('CORSSelectAreaFor'+'#{project.id}')
+                                        let cors_label = document.createElement('label')
+                                        cors_label.textContent = "Do you want CORS restrictions?"
+                                        cors_label.classList.add("form-label")
+                                        cors_label.setAttribute('for', "CORSSelectFor" + '#{project.id}')
+                                        let cors_select = document.createElement('select')
+                                        cors_select.classList.add("form-select")
+                                        cors_select.name = "CORSSelect"
+                                        cors_select.setAttribute('id', "CORSSelectFor" + '#{project.id}')
+                                        cors_select.setAttribute('onchange', 'checkCORS("CORSUrlFor' + '#{project.id}' + '",' + '"CORSSelectFor' + '#{project.id}' + '",' + '#{project.id}' + ',' + '"' + '#{project.cors_url}' + '"' + ');')
+                                        cors_select.required = true
+                                        let cors_option_no = document.createElement("option")
+                                        cors_option_no.value = "no"
+                                        cors_option_no.textContent = "No"
+                                        cors_option_no.selected = true
+                                        let cors_option_yes = document.createElement("option")
+                                        cors_option_yes.value = "yes"
+                                        cors_option_yes.textContent = "Yes"
+                                        cors_select_area.appendChild(cors_label)
+                                        cors_select.appendChild(cors_option_no)
+                                        cors_select.appendChild(cors_option_yes)
+                                        cors_select_area.appendChild(cors_select)
+                                    } else if ('#{project.cors}' == 'true') {
+                                        const cors_select_area = document.getElementById('CORSSelectAreaFor'+'#{project.id}')
+                                        const cors_url_area = document.getElementById('CORSUrlFor'+'#{project.id}')
+                                        let cors_label = document.createElement('label')
+                                        cors_label.textContent = "Do you want CORS restrictions?"
+                                        cors_label.classList.add("form-label")
+                                        cors_label.setAttribute('for', "CORSSelectFor" + '#{project.id}')
+                                        let cors_select = document.createElement('select')
+                                        cors_select.classList.add("form-select")
+                                        cors_select.name = "CORSSelect"
+                                        cors_select.setAttribute('id', "CORSSelectFor" + '#{project.id}')
+                                        cors_select.setAttribute('onchange', 'checkCORS("CORSUrlFor' + '#{project.id}' + '",' + '"CORSSelectFor' + '#{project.id}' + '",' + '#{project.id}' + ',' + '"' + '#{project.cors_url}' + '"' + ');')
+                                        cors_select.required = true
+                                        let cors_option_no = document.createElement("option")
+                                        cors_option_no.value = "no"
+                                        cors_option_no.textContent = "No"
+                                        let cors_option_yes = document.createElement("option")
+                                        cors_option_yes.value = "yes"
+                                        cors_option_yes.textContent = "Yes"
+                                        cors_option_yes.selected = true
+                                        let cors_url_label = document.createElement('label')
+                                        cors_url_label.setAttribute("for", "CORSUrlInput"+'#{project.id}')
+                                        cors_url_label.innerHTML = "Whats the origin URL?"
+                                        cors_url_label.classList.add("form-label")
+                                        cors_url_label.setAttribute('id', 'CORSUrlInputLabel'+'#{project.id}')
+                                        let cors_url_input = document.createElement('input')
+                                        cors_url_input.setAttribute('id', 'CORSUrlInput'+'#{project.id}')
+                                        cors_url_input.type = 'text'
+                                        cors_url_input.classList.add('form-control')
+                                        cors_url_input.name = "CORSUrl"
+                                        cors_url_input.value = '#{project.cors_url}'
+                                        cors_url_input.required = true;
+                                        cors_select_area.appendChild(cors_label)
+                                        cors_select.appendChild(cors_option_no)
+                                        cors_select.appendChild(cors_option_yes)
+                                        cors_select_area.appendChild(cors_select)
+                                        cors_url_area.appendChild(cors_url_label)
+                                        cors_url_area.appendChild(cors_url_input)
+                                    }
 
         script.
             async function createCopy(id) {
@@ -184,10 +241,30 @@ html
                 await navigator.clipboard.writeText(key.textContent)
             }
 
-            function formOnPageLoad(current_cors) {
-                let form = document.getElementById("EditProjectForm")
-                let cors = document.getElementById("CORSSelect")
-                if(current_cors == false){
-                    //- Add stuff here to dynamically create form
+            function checkCORS(id_for_cors_url, id_for_cors_select, current_id, current_url) {
+                let cors_url = document.getElementById(id_for_cors_url)
+                let cors_select = document.getElementById(id_for_cors_select)
+                if(cors_select.value=="yes"){
+                    let cors_url_label = document.createElement('label')
+                    cors_url_label.setAttribute("for", "CORSUrlInput"+current_id)
+                    cors_url_label.innerHTML = "Whats the origin URL?"
+                    cors_url_label.classList.add("form-label")
+                    cors_url_label.setAttribute('id', 'CORSUrlInputLabel'+current_id)
+                    let cors_url_input = document.createElement('input')
+                    cors_url_input.setAttribute('id', 'CORSUrlInput'+current_id)
+                    cors_url_input.type = 'text'
+                    cors_url_input.classList.add('form-control')
+                    cors_url_input.name = "CORSUrl"
+                    cors_url_input.value = current_url
+                    cors_url_input.required = true;
+                    cors_url.appendChild(cors_url_label)
+                    cors_url.appendChild(cors_url_input)
+                } else {
+                    if(document.getElementById('CORSUrlInputLabel'+current_id)) {
+                        cors_url.removeChild(document.getElementById('CORSUrlInputLabel'+current_id))
+                    }
+                    if(document.getElementById('CORSUrlInput'+current_id)) {
+                        cors_url.removeChild(document.getElementById('CORSUrlInput'+current_id))
+                    }
                 }
             }

@@ -32,6 +32,7 @@ body {
 /* Universal */
 .__main_content_container {
     background-color: white;
+    padding-bottom: 2rem;
 }
 
 .__special_formatting > h5 > p {

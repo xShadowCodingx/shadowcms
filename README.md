@@ -3,6 +3,8 @@ Open Source CMS
 
 **Do not go by this README just yet. I am working on finishing V1**
 
+**Working on a text editor and chart library, so I can make this project completely open source** - 9/26/24
+
 ##### Key Features:
 
 - Written in JavaScript
